@@ -1,0 +1,2 @@
+# mapi
+GraphQL based API
