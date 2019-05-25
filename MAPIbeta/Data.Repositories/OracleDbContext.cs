@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Data.Repositories
@@ -12,13 +13,13 @@ namespace Data.Repositories
         {
             Database.EnsureCreated();
         }
-        public DbSet<Lote> Lotes { get; set; }
-        public DbSet<Calle> Calles { get; set; }
-        public DbSet<Manzana> Manzanas { get; set; }
-        public DbSet<Parcela> Parcelas { get; set; }
-        public DbSet<Pueblo> Pueblos { get; set; }
-        public DbSet<UnidadT> UnidadTs { get; set; }
-        public DbSet<Features> Features { get; set; }
-        public DbSet<FeatureCollection> FeatureCollection { get; set; }
+        public DbSet<Lote> LOTES { get; set; }
+        public DbSet<Calle> CALLES { get; set; }
+        public DbSet<Manzana> MANZANAS { get; set; }
+        public DbSet<Parcela> PARCELAS { get; set; }
+        public DbSet<Pueblo> PUEBLOS { get; set; }
+        public DbSet<UnidadT> UNIDADTS { get; set; }
+        public DbSet<Features> FEATURES { get; set; }
+        public DbSet<FeatureCollection> FEATURECOLLECTION { get; set; }
     }
 }

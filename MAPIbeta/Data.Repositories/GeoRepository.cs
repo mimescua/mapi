@@ -17,18 +17,22 @@ namespace Data.Repositories
         }
         public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> _fkeys)
         {
-            var reviews = await _dbContext.Features.Where(lt => _fkeys.Contains(lt._fkey)).ToListAsync();
-            return reviews.ToLookup(t => t._fkey);
+            var reviews = await _dbContext.FEATURES.Where(lt => _fkeys.Contains(lt.fkey)).ToListAsync();
+            return reviews.ToLookup(t => t.fkey);
+        }
+        public Task<List<FeatureCollection>> GetFeatureCollection()
+        {
+            return _dbContext.FEATURECOLLECTION.ToListAsync();
         }
         public async Task<Lote> GetLoteGeomForFeature(int id)
         {
-            var result = _dbContext.Lotes.Where(t => t.Id == id)
+            var result = _dbContext.LOTES.Where(t => t.Id == id)
                 .Select(t => new Lote { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Lote> GetLotePropsForFeature(int id)
         {
-            var result = _dbContext.Lotes.Where(t => t.Id == id)
+            var result = _dbContext.LOTES.Where(t => t.Id == id)
                 .Select(t => new Lote
                 {
                     Nombre = t.Nombre,
@@ -48,13 +52,13 @@ namespace Data.Repositories
         }
         public async Task<Calle> GetCalleGeomForFeature(int id)
         {
-            var result = _dbContext.Calles.Where(t => t.Id == id)
+            var result = _dbContext.CALLES.Where(t => t.Id == id)
                 .Select(t => new Calle { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Calle> GetCallePropsForFeature(int id)
         {
-            var result = _dbContext.Calles.Where(t => t.Id == id)
+            var result = _dbContext.CALLES.Where(t => t.Id == id)
                 .Select(t => new Calle
                 {
                     Nombre = t.Nombre,
@@ -64,13 +68,13 @@ namespace Data.Repositories
         }
         public async Task<Manzana> GetManzanaGeomForFeature(int id)
         {
-            var result = _dbContext.Manzanas.Where(t => t.Id == id)
+            var result = _dbContext.MANZANAS.Where(t => t.Id == id)
                 .Select(t => new Manzana { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Manzana> GetManzanaPropsForFeature(int id)
         {
-            var result = _dbContext.Manzanas.Where(t => t.Id == id)
+            var result = _dbContext.MANZANAS.Where(t => t.Id == id)
                 .Select(t => new Manzana
                 {
                     Nombre = t.Nombre,
@@ -82,13 +86,13 @@ namespace Data.Repositories
         }
         public async Task<Parcela> GetParcelaGeomForFeature(int id)
         {
-            var result = _dbContext.Parcelas.Where(t => t.Id == id)
+            var result = _dbContext.PARCELAS.Where(t => t.Id == id)
                 .Select(t => new Parcela { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Parcela> GetParcelaPropsForFeature(int id)
         {
-            var result = _dbContext.Parcelas.Where(t => t.Id == id)
+            var result = _dbContext.PARCELAS.Where(t => t.Id == id)
                 .Select(t => new Parcela
                 {
                     Nombre = t.Nombre,
@@ -99,13 +103,13 @@ namespace Data.Repositories
         }
         public async Task<Pueblo> GetPuebloGeomForFeature(int id)
         {
-            var result = _dbContext.Pueblos.Where(t => t.Id == id)
+            var result = _dbContext.PUEBLOS.Where(t => t.Id == id)
                 .Select(t => new Pueblo { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Pueblo> GetPuebloPropsForFeature(int id)
         {
-            var result = _dbContext.Pueblos.Where(t => t.Id == id)
+            var result = _dbContext.PUEBLOS.Where(t => t.Id == id)
                 .Select(t => new Pueblo
                 {
                     Nombre = t.Nombre,
@@ -120,13 +124,13 @@ namespace Data.Repositories
         }
         public async Task<UnidadT> GetUnidadTGeomForFeature(int id)
         {
-            var result = _dbContext.UnidadTs.Where(t => t.Id == id)
+            var result = _dbContext.UNIDADTS.Where(t => t.Id == id)
                 .Select(t => new UnidadT { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<UnidadT> GetUnidadTPropsForFeature(int id)
         {
-            var result = _dbContext.UnidadTs.Where(t => t.Id == id)
+            var result = _dbContext.UNIDADTS.Where(t => t.Id == id)
                 .Select(t => new UnidadT
                 {
                     Nombre = t.Nombre,
