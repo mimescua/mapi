@@ -13,6 +13,8 @@ namespace Data.Entities
         public int Id { get; set; }
         [Column("TYPE")]
         public string Type { get; set; }
+        [NotMapped]
+        public string Name { get; set; }
         [Column("FEATURES")]
         public List<Features> Features { get; set; }
     }

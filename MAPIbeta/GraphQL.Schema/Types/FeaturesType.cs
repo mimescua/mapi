@@ -16,51 +16,69 @@ namespace GraphQL.Schema.Types
             Field(t => t.Type).Description("Feature type");
             Field<LotePropertyType>(
                 "loteProperties",
-                resolve: context => geoRepository.GetLotePropsForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllLoteProps(context.Source.Id)
+            );
+            Field<LotePropertyType>(
+                "sLoteProperties",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "ubigeo" }),
+                resolve: context =>
+                {
+                    var ubigeo = context.GetArgument<string>("ubigeo");
+                    return geoRepository.GetLotePropsByUbigeo(context.Source.Id, ubigeo);
+                }
             );
             Field<LoteGeometryType>(//ENMASCARAR NOMBRE A "geometry"
                 "loteGeometry",
-                resolve: context => geoRepository.GetLoteGeomForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllLoteGeom(context.Source.Id)
+            );
+            Field<LoteGeometryType>(
+                "sLoteGeometry",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "ubigeo" }),
+                resolve: context =>
+                {
+                    var ubigeo = context.GetArgument<string>("ubigeo");
+                    return geoRepository.GetLoteGeomByUbigeo(context.Source.Id, ubigeo);
+                }
             );
             Field<CalleGeometryType>(
                 "calleGeometry",
-                resolve: context => geoRepository.GetCalleGeomForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllCalleGeom(context.Source.Id)
             );
             Field<CallePropertyType>(
                 "calleProperties",
-                resolve: context => geoRepository.GetCallePropsForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllCalleProps(context.Source.Id)
             );
             Field<ManzanaGeometryType>(
                 "manzanaGeometry",
-                resolve: context => geoRepository.GetManzanaGeomForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllManzanaGeom(context.Source.Id)
             );
             Field<ManzanaPropertyType>(
                 "manzanaProperties",
-                resolve: context => geoRepository.GetManzanaPropsForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllManzanaProps(context.Source.Id)
             );
             Field<ParcelaGeometryType>(
                 "parcelaGeometry",
-                resolve: context => geoRepository.GetParcelaGeomForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllParcelaGeom(context.Source.Id)
             );
             Field<ParcelaPropertyType>(
                 "parcelaProperties",
-                resolve: context => geoRepository.GetParcelaPropsForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllParcelaProps(context.Source.Id)
             );
             Field<PuebloGeometryType>(
                 "puebloGeometry",
-                resolve: context => geoRepository.GetPuebloGeomForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllPuebloGeom(context.Source.Id)
             );
             Field<PuebloPropertyType>(
                 "puebloProperties",
-                resolve: context => geoRepository.GetPuebloPropsForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllPuebloProps(context.Source.Id)
             );
             Field<UnidadTGeometryType>(
                 "unidadtGeometry",
-                resolve: context => geoRepository.GetUnidadTGeomForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllUnidadTGeom(context.Source.Id)
             );
             Field<UnidadTPropertyType>(
                 "unidadtProperties",
-                resolve: context => geoRepository.GetUnidadTPropsForFeature(context.Source.Id)
+                resolve: context => geoRepository.GetAllUnidadTProps(context.Source.Id)
             );
         }
     }
