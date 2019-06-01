@@ -11,7 +11,12 @@ namespace GraphQL.Schema
     {
         public mapiQuery(GeoRepository geoRepository)
         {
-            Field<ListGraphType<FeatureCollectionType>>(
+            //Field<ListGraphType<FeatureCollectionType>>(
+            //    "FeatureCollection",
+            //    resolve: context => geoRepository.GetFeatureCollection()
+            //);
+
+            Field<FeatureCollectionType>(
                 "FeatureCollection",
                 resolve: context => geoRepository.GetFeatureCollection()
             );

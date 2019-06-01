@@ -15,14 +15,26 @@ namespace Data.Repositories
         {
             _dbContext = dbContext;
         }
-        public Task<List<FeatureCollection>> GetFeatureCollection()
+        //public Task<List<FeatureCollection>> GetFeatureCollection()
+        //{
+        //    return _dbContext.FEATURECOLLECTION.ToListAsync();
+        //}
+        public async Task<FeatureCollection> GetFeatureCollection()
         {
-            return _dbContext.FEATURECOLLECTION.ToListAsync();
+            //return _dbContext.FEATURECOLLECTION.SingleOrDefault();
+            //FeatureCollection collection = _dbContext.FEATURECOLLECTION.SingleOrDefault();
+            FeatureCollection collection = new FeatureCollection { Id=1, Type="FeatureCollection"};
+            return collection;
         }
-        public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> _fkeys)
+        //public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> _fkeys)
+        //{
+        //    var reviews = await _dbContext.FEATURES.Where(lt => _fkeys.Contains(lt.fkey)).ToListAsync();
+        //    return reviews.ToLookup(t => t.fkey);
+        //}
+        public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> id)
         {
-            var reviews = await _dbContext.FEATURES.Where(lt => _fkeys.Contains(lt.fkey)).ToListAsync();
-            return reviews.ToLookup(t => t.fkey);
+            var reviews = await _dbContext.FEATURES.Where(lt => id.Contains(lt.Id)).ToListAsync();
+            return reviews.ToLookup(t => t.Id);
         }
         public async Task<Lote> GetAllLoteGeom(int id)
         {
