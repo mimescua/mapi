@@ -10,7 +10,7 @@ namespace GraphQL.Schema.Types
     {
         public PuebloPropertyType()
         {
-            Name = "properties";
+            Name = "puebloProperties";
             Field(x => x.Id).Description("Identificador del pueblo");
             Field(x => x.Nombre).Description("Nombre del pueblo");
             Field(x => x.Ubigeo).Description("Ubigeo del pueblo");

@@ -13,7 +13,7 @@ namespace GraphQL.Schema.Types
     {
         public FeatureCollectionType(GeoRepository geoRepository, IDataLoaderContextAccessor dataLoaderAccessor)
         {
-            Name = "collection";
+            Name = "FeatureCollection";
             Field(t => t.Type).Description("geometry collection type");
             Field(t => t.Name).Description("geometry collection name");
             Field<ListGraphType<FeaturesType>>(
@@ -23,7 +23,7 @@ namespace GraphQL.Schema.Types
                     //var user = (ClaimsPrincipal) context.UserContext;//securing this field
                     var loader = dataLoaderAccessor.Context.GetOrAddCollectionBatchLoader<int, Features>
                     (
-                        "GetLotsByLotId", geoRepository.GetFeaturesForCollection
+                        "GetFeatureCollection", geoRepository.GetFeaturesForCollection
                     );
                     return loader.LoadAsync(context.Source.Id);
                 }

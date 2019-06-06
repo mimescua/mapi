@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Data.Entities
 {
-    [Table("CALLES")]
+    [Table("SFI_GEOCALLES")]//[Table("CALLES")]
     public class Calle
     {
-        [Column("ID")][Key]
+        [Column("CALLEID")][Key]//[Column("ID")][Key]
         public int Id { get; set; }
 
         [Column("MANZANAID")]

@@ -10,7 +10,7 @@ namespace GraphQL.Schema.Types
     {
         public ManzanaPropertyType()
         {
-            Name = "properties";
+            Name = "manzanaProperties";
             Field(x => x.Id).Description("Identificador de la manzana");
             Field(x => x.Nombre).Description("Nombre de la manzana");
             Field(x => x.Ubigeo).Description("Ubigeo de la manzana");

@@ -10,7 +10,7 @@ namespace GraphQL.Schema.Types
     {
         public UnidadTPropertyType()
         {
-            Name = "properties";
+            Name = "unidadtProperties";
             Field(x => x.Id).Description("Identificador de la unidad territorial");
             Field(x => x.Nombre).Description("Nombre de la unidad territorial");
             Field(x => x.Ubigeo).Description("Ubigeo de la unidad territorial");

@@ -10,7 +10,7 @@ namespace GraphQL.Schema.Types
     {
         public ParcelaPropertyType()
         {
-            Name = "properties";
+            Name = "parcelaProperties";
             Field(x => x.Id).Description("Identificador de la parcela");
             Field(x => x.Nombre).Description("Nombre de la parcela");
             Field(x => x.Ubigeo).Description("Ubigeo de la parcela");

@@ -10,7 +10,7 @@ namespace Data.Repositories
     {
         public static void Seed(this OracleDbContext dbContext)
         {
-            if (!dbContext.FEATURECOLLECTION.Any())
+            /*if (!dbContext.FEATURECOLLECTION.Any())
             {
                 dbContext.FEATURECOLLECTION.Add(new FeatureCollection
                 {
@@ -18,20 +18,21 @@ namespace Data.Repositories
                     Type = "FeatureCollection",
                 });
                 dbContext.SaveChanges();
-            }
-            if (!dbContext.FEATURES.Any())
+            }*/
+
+            if (!dbContext.SFI_GEOFEATURES.Any())
             {
-                dbContext.FEATURES.Add(new Features
+                dbContext.SFI_GEOFEATURES.Add(new Features
                 {
                     Id = 1,
-                    fkey = 1,
+                    //fkey = 1,
                     Type = "Feature",
                 });
                 dbContext.SaveChanges();
             }
-            if (!dbContext.UNIDADTS.Any())
+            if (!dbContext.SFI_GEOUNIDADTS.Any())
             {
-                dbContext.UNIDADTS.Add(new UnidadT
+                dbContext.SFI_GEOUNIDADTS.Add(new UnidadT
                 {
                     Id = 1,
                     Type = "MultiPolygon",
@@ -41,11 +42,12 @@ namespace Data.Repositories
                 });
                 dbContext.SaveChanges();
             }
-            if (!dbContext.PUEBLOS.Any())
+            if (!dbContext.SFI_GEOPUEBLOS.Any())
             {
-                dbContext.PUEBLOS.Add(new Pueblo
+                dbContext.SFI_GEOPUEBLOS.Add(new Pueblo
                 {
                     Id = 1,
+                    UnidadTId = 1,//xtra
                     Type = "MultiPolygon",
                     Coordinates = "[[[[-77.12698459625244,-12.059738871016993],[-77.11921691894531,-12.065551405810487],[-77.11305856704712,-12.056738126848984],[-77.12698459625244,-12.059738871016993]]]]",
                     Nombre = "XR1",
@@ -58,11 +60,13 @@ namespace Data.Repositories
                 });
                 dbContext.SaveChanges();
             }
-            if (!dbContext.MANZANAS.Any())
+            if (!dbContext.SFI_GEOMANZANAS.Any())
             {
-                dbContext.MANZANAS.Add(new Manzana
+                dbContext.SFI_GEOMANZANAS.Add(new Manzana
                 {
                     Id = 1,
+                    PuebloId = 1,//xtra
+                    ParcelaId = 1,//xtra
                     Type = "MultiPolygon",
                     Coordinates = "[[[[-77.12724208831787,-12.064670090950587],[-77.12634086608887,-12.064670090950587],[-77.12634086608887,-12.063935659687319],[-77.12724208831787,-12.063935659687319],[-77.12724208831787,-12.064670090950587]]]]",
                     Nombre = "A",
@@ -72,11 +76,12 @@ namespace Data.Repositories
                 });
                 dbContext.SaveChanges();
             }
-            if (!dbContext.LOTES.Any())
+            if (!dbContext.SFI_GEOLOTES.Any())
             {
-                dbContext.LOTES.Add(new Lote
+                dbContext.SFI_GEOLOTES.Add(new Lote
                 {
                     Id = 1,
+                    ManzanaId = 1,//xtra
                     Type = "MultiPolygon",
                     Coordinates = "[[[[-77.1212875843048,-12.059560506043402],[-77.12060093879698,-12.060305441322697],[-77.11945295333861,-12.059382140951179],[-77.1212875843048,-12.059560506043402]]]]",
                     Nombre = "10",
@@ -94,11 +99,12 @@ namespace Data.Repositories
                 });
                 dbContext.SaveChanges();
             }
-            if (!dbContext.CALLES.Any())
+            if (!dbContext.SFI_GEOCALLES.Any())
             {
-                dbContext.CALLES.Add(new Calle
+                dbContext.SFI_GEOCALLES.Add(new Calle
                 {
                     Id = 1,
+                    ManzanaId = 1,//xtra
                     Type = "LineString",
                     Coordinates = "[[-77.12094426155089,-12.06418746491854],[-77.11989283561707,-12.062949420254483]]",
                     Nombre = "Calle 1",

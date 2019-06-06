@@ -10,7 +10,7 @@ namespace GraphQL.Schema.Types
     {
         public CallePropertyType()
         {
-            Name = "properties";
+            Name = "calleProperties";
             Field(x => x.Id).Description("Identificador de la calle");
             Field(x => x.Nombre).Description("Nombre de la calle");
             Field(x => x.Ubigeo).Description("Ubigeo de la calle");

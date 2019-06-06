@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <Compile Remove="Class1.cs" />
+    <Compile Remove="mapiMutation.cs" />
+    <Compile Remove="Types\FeatureCollectionInputType.cs" />
+    <Compile Remove="Types\UnidadTInputType.cs" />
   </ItemGroup>
 
   <ItemGroup>

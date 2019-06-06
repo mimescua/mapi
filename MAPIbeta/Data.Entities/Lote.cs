@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Data.Entities
 {
-    [Table("LOTES")]
+    [Table("SFI_GEOLOTES")]//[Table("LOTES")]
     public class Lote
     {
-        [Column("ID")][Key]
+        [Column("LOTEID")][Key]//[Column("ID")][Key]
         public int Id { get; set; }
 
         [Column("MANZANAID")]

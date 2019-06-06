@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Data.Entities
 {
-    [Table("UNIDADTS")]
+    [Table("SFI_GEOUNIDADTS")]//[Table("UNIDADTS")]
     public class UnidadT
     {
-        [Column("ID")][Key]
+        [Column("UNIDADTID")][Key]
         public int Id { get; set; }
 
         public List<Pueblo> Pueblos { get; set; }
