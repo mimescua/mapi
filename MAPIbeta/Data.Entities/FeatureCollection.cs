@@ -9,7 +9,7 @@ namespace Data.Entities
     [NotMapped]//[Table("SFI_GEOFEATURECOLLECTION")]//[Table("FEATURECOLLECTION")]
     public class FeatureCollection
     {
-        [NotMapped]//[Column("ID")][Key]
+        [NotMapped]//[Column("FEATURECOLLECTIONID")][Key]
         public int Id { get; set; }
         [NotMapped]//[Column("TYPE")]
         public string Type { get; set; }

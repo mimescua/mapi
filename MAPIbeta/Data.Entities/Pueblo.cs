@@ -6,11 +6,14 @@ using System.Text;
 
 namespace Data.Entities
 {
-    [Table("SFI_GEOPUEBLOS")]//[Table("PUEBLOS")]
+    [Table("SFI_GEOPUEBLO")]//[Table("PUEBLOS")]
     public class Pueblo
     {
         [Column("PUEBLOID")][Key]//[Column("ID")][Key]
         public int Id { get; set; }
+
+        [Column("GEA_ID")]
+        public int ArchivoId { get; set; }
 
         public List<Manzana> Manzanas { get; set; }
         public List<Parcela> Parcelas { get; set; }

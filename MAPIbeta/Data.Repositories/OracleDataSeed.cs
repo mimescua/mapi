@@ -47,6 +47,7 @@ namespace Data.Repositories
                 dbContext.SFI_GEOPUEBLOS.Add(new Pueblo
                 {
                     Id = 1,
+                    ArchivoId = 21,//xtra
                     UnidadTId = 1,//xtra
                     Type = "MultiPolygon",
                     Coordinates = "[[[[-77.12698459625244,-12.059738871016993],[-77.11921691894531,-12.065551405810487],[-77.11305856704712,-12.056738126848984],[-77.12698459625244,-12.059738871016993]]]]",
@@ -60,11 +61,27 @@ namespace Data.Repositories
                 });
                 dbContext.SaveChanges();
             }
+            if (!dbContext.SFI_GEOPARCELAS.Any())
+            {
+                dbContext.SFI_GEOPARCELAS.Add(new Parcela
+                {
+                    Id = 1,
+                    ArchivoId = 21,//xtra
+                    PuebloId = 1,//xtra
+                    Type = "MultiPolygon",
+                    Coordinates = "[[[[-77.12724208831787,-12.064670090950587],[-77.12634086608887,-12.064670090950587],[-77.12634086608887,-12.063935659687319],[-77.12724208831787,-12.063935659687319],[-77.12724208831787,-12.064670090950587]]]]",
+                    Nombre = "Sub-Pueblo A",
+                    Ubigeo = "01",
+                    Area = 2.1,
+                });
+                dbContext.SaveChanges();
+            }
             if (!dbContext.SFI_GEOMANZANAS.Any())
             {
                 dbContext.SFI_GEOMANZANAS.Add(new Manzana
                 {
                     Id = 1,
+                    ArchivoId = 21,//xtra
                     PuebloId = 1,//xtra
                     ParcelaId = 1,//xtra
                     Type = "MultiPolygon",
@@ -81,6 +98,8 @@ namespace Data.Repositories
                 dbContext.SFI_GEOLOTES.Add(new Lote
                 {
                     Id = 1,
+                    ArchivoId = 21,//xtra
+                    PuebloId = 1,//xtra
                     ManzanaId = 1,//xtra
                     Type = "MultiPolygon",
                     Coordinates = "[[[[-77.1212875843048,-12.059560506043402],[-77.12060093879698,-12.060305441322697],[-77.11945295333861,-12.059382140951179],[-77.1212875843048,-12.059560506043402]]]]",
@@ -104,6 +123,8 @@ namespace Data.Repositories
                 dbContext.SFI_GEOCALLES.Add(new Calle
                 {
                     Id = 1,
+                    ArchivoId = 21,//xtra
+                    PuebloId = 1,//xtra
                     ManzanaId = 1,//xtra
                     Type = "LineString",
                     Coordinates = "[[-77.12094426155089,-12.06418746491854],[-77.11989283561707,-12.062949420254483]]",

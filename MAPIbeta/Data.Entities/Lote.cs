@@ -12,6 +12,13 @@ namespace Data.Entities
         [Column("LOTEID")][Key]//[Column("ID")][Key]
         public int Id { get; set; }
 
+        [Column("GEA_ID")]
+        public int ArchivoId { get; set; }
+
+        [Column("PUEBLOID")]
+        public int PuebloId { get; set; }
+        public Pueblo Pueblo { get; set; }
+
         [Column("MANZANAID")]
         public int ManzanaId { get; set; }
         public Manzana Manzana { get; set; }

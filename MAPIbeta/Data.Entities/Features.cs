@@ -15,7 +15,7 @@ namespace Data.Entities
         //public int fkey { get; set; }
         [Column("TYPE")]
         public string Type { get; set; }
-        [NotMapped]//[Column("FEATURECOLLECTIONID")]
+        [Column("FEATURECOLLECTIONID")]
         public int FeatureCollectionId { get; set; }
         public FeatureCollection FeatureCollection { get; set; }
     }

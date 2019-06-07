@@ -33,8 +33,8 @@ namespace Data.Repositories
         //}
         public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> id)
         {
-            var reviews = await _dbContext.SFI_GEOFEATURES.Where(lt => id.Contains(lt.Id)).ToListAsync();
-            return reviews.ToLookup(t => t.Id);
+            var result = await _dbContext.SFI_GEOFEATURES.Where(t => id.Contains(t.FeatureCollectionId)).ToListAsync();
+            return result.ToLookup(t => t.FeatureCollectionId);
         }
         public async Task<Lote> GetAllLoteGeom(int id)
         {

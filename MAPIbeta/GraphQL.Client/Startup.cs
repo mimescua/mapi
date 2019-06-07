@@ -66,6 +66,9 @@ namespace GraphQL.Client
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, OracleDbContext dbContext/*IHostingEnvironment env*/)
         {
+            app.UseCors(builder =>
+                builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
             app.UseGraphQL<mapiSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
             dbContext.Seed();
