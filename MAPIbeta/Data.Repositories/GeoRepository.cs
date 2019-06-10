@@ -19,21 +19,49 @@ namespace Data.Repositories
         //{
         //    return _dbContext.FEATURECOLLECTION.ToListAsync();
         //}
-        public async Task<FeatureCollection> GetFeatureCollection()
+        public async Task<FeatureCollection> GetFeatureCollection(string tipo)
         {
             //return _dbContext.FEATURECOLLECTION.SingleOrDefault();
             //FeatureCollection collection = _dbContext.FEATURECOLLECTION.SingleOrDefault();
-            FeatureCollection collection = new FeatureCollection { Id=1, Type="FeatureCollection"};
+            FeatureCollection collection;
+            switch (tipo.ToLower())
+            {
+                case "calle": collection = new FeatureCollection { Id = 1, Name = tipo, Type = "FeatureCollection" }; break;
+                case "lote": collection = new FeatureCollection { Id = 2, Name = tipo, Type = "FeatureCollection" }; break;
+                case "manzana": collection = new FeatureCollection { Id = 3, Name = tipo, Type = "FeatureCollection" }; break;
+                case "parcela": collection = new FeatureCollection { Id = 4, Name = tipo, Type = "FeatureCollection" }; break;
+                case "pueblo": collection = new FeatureCollection { Id = 5, Name = tipo, Type = "FeatureCollection" }; break;
+                case "unidadt": collection = new FeatureCollection { Id = 6, Name = tipo, Type = "FeatureCollection" }; break;
+                default: collection = new FeatureCollection { Id = 0, Name = tipo, Type = "FeatureCollection" }; break;
+            }
+            
             return collection;
         }
-        //public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> _fkeys)
+        //public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> id)
         //{
-        //    var reviews = await _dbContext.FEATURES.Where(lt => _fkeys.Contains(lt.fkey)).ToListAsync();
-        //    return reviews.ToLookup(t => t.fkey);
+        //    var result = await _dbContext.SFI_GEOFEATURES.Where(t => id.Contains(t.FeatureCollectionId)).ToListAsync();
+        //    return result.ToLookup(t => t.FeatureCollectionId);
         //}
-        public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> id)
+        //public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> id)
+        public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> tipo)
         {
-            var result = await _dbContext.SFI_GEOFEATURES.Where(t => id.Contains(t.FeatureCollectionId)).ToListAsync();
+            var contadorRegistros = 0;
+            switch (tipo.ElementAt(0))
+            {
+                case 1: contadorRegistros = _dbContext.SFI_GEOCALLES.Count(); break;
+                case 2: contadorRegistros = _dbContext.SFI_GEOLOTES.Count(); break;
+                case 3: contadorRegistros = _dbContext.SFI_GEOMANZANAS.Count(); break;
+                case 4: contadorRegistros = _dbContext.SFI_GEOPARCELAS.Count(); break;
+                case 5: contadorRegistros = _dbContext.SFI_GEOPUEBLOS.Count(); break;
+                case 6: contadorRegistros = _dbContext.SFI_GEOUNIDADTS.Count(); break;
+                default: contadorRegistros = 1; break;
+            }
+
+            var result = new List<Features>(contadorRegistros);
+            for (int i = 0; i < contadorRegistros; i++)
+            {
+                result.Add(new Features { Id = i + 1, Type = "Feature", FeatureCollectionId = tipo.ElementAt(0) });
+            }
             return result.ToLookup(t => t.FeatureCollectionId);
         }
         public async Task<Lote> GetAllLoteGeom(int id)

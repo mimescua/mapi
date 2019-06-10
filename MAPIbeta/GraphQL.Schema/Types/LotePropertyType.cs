@@ -20,7 +20,6 @@ namespace GraphQL.Schema.Types
             Field(x => x.MedidIzq).Description("Medida izquierda del lote");
             Field(x => x.MedidPost).Description("Medida posterior del lote");
             Field(x => x.MedidDer).Description("Medida derecha del lote");
-            Name = "lotepropertiess";
             Field(x => x.ColinFrnt).Description("Colindancia frontal del lote");
             Field(x => x.ColinIzq).Description("Colindancia izquierda del lote");
             Field(x => x.ColinPost).Description("Colindancia posterior del lote");

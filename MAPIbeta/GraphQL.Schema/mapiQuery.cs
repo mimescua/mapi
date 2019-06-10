@@ -18,7 +18,12 @@ namespace GraphQL.Schema
 
             Field<FeatureCollectionType>(
                 "FeatureCollection",
-                resolve: context => geoRepository.GetFeatureCollection()
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tipo" }),
+                resolve: context =>
+                {
+                    var tipo = context.GetArgument<string>("tipo");
+                    return geoRepository.GetFeatureCollection(tipo);
+                }
             );
         }
     }
