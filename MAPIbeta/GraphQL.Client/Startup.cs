@@ -34,9 +34,12 @@ namespace GraphQL.Client
         {
             services.AddDbContext<OracleDbContext>(options => options.UseOracle(Configuration["ConnectionStrings:OracleConnection"]));
             services.AddScoped<GeoRepository>();
+            services.AddScoped<AddRepository>();
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<mapiQuery>();
+            services.AddScoped<mapiMutation>();
+
             services.AddScoped<FeatureCollectionType>();
             services.AddScoped<FeaturesType>();
             services.AddScoped<CalleGeometryType>();
@@ -51,6 +54,8 @@ namespace GraphQL.Client
             services.AddScoped<PuebloPropertyType>();
             services.AddScoped<UnidadTGeometryType>();
             services.AddScoped<UnidadTPropertyType>();
+            services.AddScoped<UnidadTInputType>();
+            services.AddScoped<UnidadTType>();
 
             services.AddScoped<mapiSchema>();
 

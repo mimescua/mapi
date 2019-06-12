@@ -12,7 +12,7 @@ namespace Data.Entities
         [Column("UNIDADTID")][Key]
         public int Id { get; set; }
 
-        public List<Pueblo> Pueblos { get; set; }
+        //public List<Pueblo> Pueblos { get; set; }
 
         [Column("TYPE")]
         public string Type { get; set; }

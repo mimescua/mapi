@@ -1,4 +1,5 @@
-﻿using Data.Repositories;
+﻿using Data.Entities;
+using Data.Repositories;
 using GraphQL.Schema.Types;
 using GraphQL.Types;
 using System;
@@ -9,16 +10,16 @@ namespace GraphQL.Schema
 {
     public class mapiMutation : ObjectGraphType
     {
-        public mapiMutation(GeoRepository geoRepository)
+        public mapiMutation(AddRepository addRepository)
         {
-            FieldAsync<FeatureCollectionType>(
+            FieldAsync<UnidadTType>(
                 "crearUnidadTerritorial",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<FeatureCollectionInputType>> { Name = "FeatureCollection"}),
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<UnidadTInputType>> { Name = "feature"}),
                 resolve: async context =>
                 {
-                    var featurecollection = context.GetArgument<FeatureCollectionInputType>("FeatureCollection");
+                    var unidadT = context.GetArgument<UnidadT>("feature");
                     return await context.TryAsyncResolve(
-                        async c => await GeoRepository.AddFeatureCollection(featurecollection));
+                        async c => await addRepository.AddUnidadT(unidadT));
                 }
             );
         }

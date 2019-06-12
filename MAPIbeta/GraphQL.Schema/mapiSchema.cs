@@ -11,6 +11,7 @@ namespace GraphQL.Schema
         public mapiSchema(IDependencyResolver resolver) : base(resolver)
         {
             Query = resolver.Resolve<mapiQuery>();
+            Mutation = resolver.Resolve<mapiMutation>();
         }
     }
 }
