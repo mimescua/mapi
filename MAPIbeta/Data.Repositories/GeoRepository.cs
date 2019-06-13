@@ -45,22 +45,22 @@ namespace Data.Repositories
         //public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> id)
         public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> tipo)
         {
-            var contadorRegistros = 0;
+            int[] ids = new int[] { };
             switch (tipo.ElementAt(0))
             {
-                case 1: contadorRegistros = _dbContext.SFI_GEOCALLES.Count(); break;
-                case 2: contadorRegistros = _dbContext.SFI_GEOLOTES.Count(); break;
-                case 3: contadorRegistros = _dbContext.SFI_GEOMANZANAS.Count(); break;
-                case 4: contadorRegistros = _dbContext.SFI_GEOPARCELAS.Count(); break;
-                case 5: contadorRegistros = _dbContext.SFI_GEOPUEBLOS.Count(); break;
-                case 6: contadorRegistros = _dbContext.SFI_GEOUNIDADTS.Count(); break;
-                default: contadorRegistros = 1; break;
+                case 1: { ids = _dbContext.SFI_GEOCALLES.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
+                case 2: { ids = _dbContext.SFI_GEOLOTES.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
+                case 3: { ids = _dbContext.SFI_GEOMANZANAS.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
+                case 4: { ids = _dbContext.SFI_GEOPARCELAS.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
+                case 5: { ids = _dbContext.SFI_GEOPUEBLOS.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
+                case 6: { ids = _dbContext.SFI_GEOUNIDADTS.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
+                default: ids = new int[] { 1 }; break;
             }
 
-            var result = new List<Features>(contadorRegistros);
-            for (int i = 0; i < contadorRegistros; i++)
+            var result = new List<Features>(ids.Length);
+            for (int i = 0; i < ids.Length; i++)
             {
-                result.Add(new Features { Id = i + 1, Type = "Feature", FeatureCollectionId = tipo.ElementAt(0) });
+                result.Add(new Features { Id = ids[i], Type = "Feature", FeatureCollectionId = tipo.ElementAt(0) });
             }
             return result.ToLookup(t => t.FeatureCollectionId);
         }
