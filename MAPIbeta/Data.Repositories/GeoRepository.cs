@@ -45,15 +45,16 @@ namespace Data.Repositories
         //public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> id)
         public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> tipo)
         {
-            int[] ids = new int[] { };
+            //int[] ids = new int[] { };
+            var ids = new int[] { };
             switch (tipo.ElementAt(0))
             {
-                case 1: { ids = _dbContext.SFI_GEOCALLES.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
-                case 2: { ids = _dbContext.SFI_GEOLOTES.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
-                case 3: { ids = _dbContext.SFI_GEOMANZANAS.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
-                case 4: { ids = _dbContext.SFI_GEOPARCELAS.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
-                case 5: { ids = _dbContext.SFI_GEOPUEBLOS.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
-                case 6: { ids = _dbContext.SFI_GEOUNIDADTS.AsEnumerable().Select(r => r.Id).ToArray(); }; break;
+                case 1: { ids = _dbContext.SFI_GEOCALLES.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 2: { ids = _dbContext.SFI_GEOLOTES.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 3: { ids = _dbContext.SFI_GEOMANZANAS.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 4: { ids = _dbContext.SFI_GEOPARCELAS.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 5: { ids = _dbContext.SFI_GEOPUEBLOS.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 6: { ids = _dbContext.SFI_GEOUNIDADTS.AsQueryable().Select(r => r.Id).ToArray(); }; break;
                 default: ids = new int[] { 1 }; break;
             }
 
