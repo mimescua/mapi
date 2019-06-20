@@ -18,7 +18,7 @@ namespace Data.Repositories
 
         public async Task<UnidadT> AddUnidadT(UnidadT unidadT)
         {
-            _dbContext.SFI_GEOUNIDADTS.Add(unidadT);
+            _dbContext.SFI_GEOUNIDADT.Add(unidadT);
             await _dbContext.SaveChangesAsync();
             return unidadT;
         }

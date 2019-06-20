@@ -10,44 +10,23 @@ namespace Data.Repositories
     {
         public static void Seed(this OracleDbContext dbContext)
         {
-            /*if (!dbContext.FEATURECOLLECTION.Any())
+            if (!dbContext.SFI_GEOUNIDADT.Any())
             {
-                dbContext.FEATURECOLLECTION.Add(new FeatureCollection
+                dbContext.SFI_GEOUNIDADT.Add(new UnidadT
                 {
                     Id = 1,
-                    Type = "FeatureCollection",
-                });
-                dbContext.SaveChanges();
-            }*/
-
-            if (!dbContext.SFI_GEOFEATURES.Any())
-            {
-                dbContext.SFI_GEOFEATURES.Add(new Features
-                {
-                    Id = 1,
-                    //fkey = 1,
-                    Type = "Feature",
-                });
-                dbContext.SaveChanges();
-            }
-            if (!dbContext.SFI_GEOUNIDADTS.Any())
-            {
-                dbContext.SFI_GEOUNIDADTS.Add(new UnidadT
-                {
-                    Id = 1,
-                    Type = "MultiPolygon",
-                    Coordinates = "[[[[-77.12722063064575,-12.059759855123742],[-77.11666345596313,-12.067188125719579],[-77.10968971252441,-12.070377602464728],[-77.10758686065674,-12.055688907680587],[-77.12722063064575,-12.059759855123742]]]]",
+                    Type = "Polygon",
+                    Coordinates = "[[[-77.12722063064575,-12.059759855123742],[-77.11666345596313,-12.067188125719579],[-77.10968971252441,-12.070377602464728],[-77.10758686065674,-12.055688907680587],[-77.12722063064575,-12.059759855123742]]]",
                     Nombre = "Asentamiento Humano",
                     Ubigeo = "01",
                 });
                 dbContext.SaveChanges();
             }
-            if (!dbContext.SFI_GEOPUEBLOS.Any())
+            if (!dbContext.SFI_GEOPUEBLO.Any())
             {
-                dbContext.SFI_GEOPUEBLOS.Add(new Pueblo
+                dbContext.SFI_GEOPUEBLO.Add(new Pueblo
                 {
                     Id = 1,
-                    ArchivoId = 21,//xtra
                     UnidadTId = 1,//xtra
                     Type = "MultiPolygon",
                     Coordinates = "[[[[-77.12698459625244,-12.059738871016993],[-77.11921691894531,-12.065551405810487],[-77.11305856704712,-12.056738126848984],[-77.12698459625244,-12.059738871016993]]]]",
@@ -61,12 +40,11 @@ namespace Data.Repositories
                 });
                 dbContext.SaveChanges();
             }
-            if (!dbContext.SFI_GEOPARCELAS.Any())
+            if (!dbContext.SFI_GEOPARCELA.Any())
             {
-                dbContext.SFI_GEOPARCELAS.Add(new Parcela
+                dbContext.SFI_GEOPARCELA.Add(new Parcela
                 {
                     Id = 1,
-                    ArchivoId = 21,//xtra
                     PuebloId = 1,//xtra
                     Type = "MultiPolygon",
                     Coordinates = "[[[[-77.12724208831787,-12.064670090950587],[-77.12634086608887,-12.064670090950587],[-77.12634086608887,-12.063935659687319],[-77.12724208831787,-12.063935659687319],[-77.12724208831787,-12.064670090950587]]]]",
@@ -76,15 +54,14 @@ namespace Data.Repositories
                 });
                 dbContext.SaveChanges();
             }
-            if (!dbContext.SFI_GEOMANZANAS.Any())
+            if (!dbContext.SFI_GEOMANZANA.Any())
             {
-                dbContext.SFI_GEOMANZANAS.Add(new Manzana
+                dbContext.SFI_GEOMANZANA.Add(new Manzana
                 {
                     Id = 1,
-                    ArchivoId = 21,//xtra
                     PuebloId = 1,//xtra
                     ParcelaId = 1,//xtra
-                    Type = "MultiPolygon",
+                    Type = "Polygon",
                     Coordinates = "[[[[-77.12724208831787,-12.064670090950587],[-77.12634086608887,-12.064670090950587],[-77.12634086608887,-12.063935659687319],[-77.12724208831787,-12.063935659687319],[-77.12724208831787,-12.064670090950587]]]]",
                     Nombre = "A",
                     Ubigeo = "01",
@@ -93,15 +70,14 @@ namespace Data.Repositories
                 });
                 dbContext.SaveChanges();
             }
-            if (!dbContext.SFI_GEOLOTES.Any())
+            if (!dbContext.SFI_GEOLOTE.Any())
             {
-                dbContext.SFI_GEOLOTES.Add(new Lote
+                dbContext.SFI_GEOLOTE.Add(new Lote
                 {
                     Id = 1,
-                    ArchivoId = 21,//xtra
                     PuebloId = 1,//xtra
                     ManzanaId = 1,//xtra
-                    Type = "MultiPolygon",
+                    Type = "Polygon",
                     Coordinates = "[[[[-77.1212875843048,-12.059560506043402],[-77.12060093879698,-12.060305441322697],[-77.11945295333861,-12.059382140951179],[-77.1212875843048,-12.059560506043402]]]]",
                     Nombre = "10",
                     Ubigeo = "01",
@@ -118,107 +94,20 @@ namespace Data.Repositories
                 });
                 dbContext.SaveChanges();
             }
-            if (!dbContext.SFI_GEOCALLES.Any())
+            if (!dbContext.SFI_GEOCALLE.Any())
             {
-                dbContext.SFI_GEOCALLES.Add(new Calle
+                dbContext.SFI_GEOCALLE.Add(new Calle
                 {
                     Id = 1,
-                    ArchivoId = 21,//xtra
                     PuebloId = 1,//xtra
                     ManzanaId = 1,//xtra
-                    Type = "LineString",
-                    Coordinates = "[[-77.12094426155089,-12.06418746491854],[-77.11989283561707,-12.062949420254483]]",
+                    Type = "Point",
+                    Coordinates = "[-77.12094426155089,-12.06418746491854]",
                     Nombre = "Calle 1",
                     Ubigeo = "01",
                 });
                 dbContext.SaveChanges();
             }
-            /*if (!dbContext.FEATURECOLLECTION.Any())
-            {
-                dbContext.FEATURECOLLECTION.Add(new FeatureCollection
-                {
-                    Id = 1,
-                    Type = "FeatureCollection",
-                    Features = new List<Features>
-                    {
-                        new Features
-                        {
-                            Type = "Feature",
-                            UnidadTGeom = new UnidadT {
-                                Id = 1,
-                                Pueblos = new List<Pueblo> {
-                                    new Pueblo
-                                    {
-                                        Id = 1,
-                                        Parcelas = new List<Parcela> {
-                                            new Parcela
-                                            {
-                                                Id = 1,
-                                                Manzanas = new List<Manzana> {
-                                                    new Manzana
-                                                    {
-                                                        Id = 1,
-                                                        Lotes = new List<Lote> {
-                                                            new Lote
-                                                            {
-                                                                Id = 1,
-                                                                Type = "MultiPolygon",
-                                                                Coordinates = "[[[[-77.1212875843048,-12.059560506043402],[-77.12060093879698,-12.060305441322697],[-77.11945295333861,-12.059382140951179],[-77.1212875843048,-12.059560506043402]]]]",
-                                                                Nombre = "10",
-                                                                Ubigeo ="01",
-                                                                Area = 2.1,
-                                                                TipoUso = "vivienda",
-                                                                MedidFrnt = "10",
-                                                                MedidIzq = "10",
-                                                                MedidPost = "10",
-                                                                MedidDer = "10",
-                                                                ColinFrnt = "calle",
-                                                                ColinIzq = "calle",
-                                                                ColinPost = "calle",
-                                                                ColinDer = "calle",
-                                                            },
-                                                        },
-                                                        Calles = new List<Calle> {
-                                                            new Calle
-                                                            {
-                                                                Id = 1,
-                                                                Type = "LineString",
-                                                                Coordinates = "[[-77.12094426155089,-12.06418746491854],[-77.11989283561707,-12.062949420254483]]",
-                                                                Nombre = "Calle 1",
-                                                                Ubigeo = "01",
-                                                            },
-                                                        },
-                                                        Type = "MultiPolygon",
-                                                        Coordinates = "[[[[-77.12724208831787,-12.064670090950587],[-77.12634086608887,-12.064670090950587],[-77.12634086608887,-12.063935659687319],[-77.12724208831787,-12.063935659687319],[-77.12724208831787,-12.064670090950587]]]]",
-                                                        Nombre = "A",
-                                                        Ubigeo = "01",
-                                                        CantLotes = 1,
-                                                        Area = 2.1,
-                                                    },
-                                                },
-                                            }
-                                        },
-                                        Type = "MultiPolygon",
-                                        Coordinates = "[[[[-77.12698459625244,-12.059738871016993],[-77.11921691894531,-12.065551405810487],[-77.11305856704712,-12.056738126848984],[-77.12698459625244,-12.059738871016993]]]]",
-                                        Nombre = "XR1",
-                                        Ubigeo = "01",
-                                        CantParcelas = 1,
-                                        Area = 2.1,
-                                        AreaVivienda = 2.1,
-                                        AreaComunal = 2.1,
-                                        AreaEducacion = 2.1,
-                                    }
-                                },
-                                Type = "MultiPolygon",
-                                Coordinates = "[[[[-77.12722063064575,-12.059759855123742],[-77.11666345596313,-12.067188125719579],[-77.10968971252441,-12.070377602464728],[-77.10758686065674,-12.055688907680587],[-77.12722063064575,-12.059759855123742]]]]",
-                                Nombre = "Asentamiento Humano",
-                                Ubigeo= "01",
-                            },
-                        },
-                    }
-                });
-                dbContext.SaveChanges();
-            };*/
         }
     }
 }

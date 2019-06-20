@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Data.Entities
 {
-    [Table("SFI_GEOUNIDADTS")]//[Table("UNIDADTS")]
+    [Table("SFI_GEOUNIDADT")]//[Table("UNIDADTS")]
     public class UnidadT
     {
         [Column("UNIDADTID")][Key]

@@ -13,13 +13,13 @@ namespace Data.Repositories
         {
             Database.EnsureCreated();
         }
-        public DbSet<Lote> SFI_GEOLOTES { get; set; }
-        public DbSet<Calle> SFI_GEOCALLES { get; set; }
-        public DbSet<Manzana> SFI_GEOMANZANAS { get; set; }
-        public DbSet<Parcela> SFI_GEOPARCELAS { get; set; }
-        public DbSet<Pueblo> SFI_GEOPUEBLOS { get; set; }
-        public DbSet<UnidadT> SFI_GEOUNIDADTS { get; set; }
-        public DbSet<Features> SFI_GEOFEATURES { get; set; }
+        public DbSet<Lote> SFI_GEOLOTE { get; set; }
+        public DbSet<Calle> SFI_GEOCALLE { get; set; }
+        public DbSet<Manzana> SFI_GEOMANZANA { get; set; }
+        public DbSet<Parcela> SFI_GEOPARCELA { get; set; }
+        public DbSet<Pueblo> SFI_GEOPUEBLO { get; set; }
+        public DbSet<UnidadT> SFI_GEOUNIDADT { get; set; }
+        //public DbSet<Features> SFI_GEOFEATURES { get; set; }
         //public DbSet<FeatureCollection> SFI_GEOFEATURECOLLECTION { get; set; }
     }
 }

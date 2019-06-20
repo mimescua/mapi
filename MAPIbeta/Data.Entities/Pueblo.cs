@@ -12,9 +12,6 @@ namespace Data.Entities
         [Column("PUEBLOID")][Key]//[Column("ID")][Key]
         public int Id { get; set; }
 
-        [Column("GEA_ID")]
-        public int ArchivoId { get; set; }
-
         public List<Manzana> Manzanas { get; set; }
         public List<Parcela> Parcelas { get; set; }
         [Column("UNIDADTID")]

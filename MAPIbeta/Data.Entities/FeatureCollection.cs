@@ -6,16 +6,16 @@ using System.Text;
 
 namespace Data.Entities
 {
-    [NotMapped]//[Table("SFI_GEOFEATURECOLLECTION")]//[Table("FEATURECOLLECTION")]
+    [NotMapped]
     public class FeatureCollection
     {
-        [NotMapped]//[Column("FEATURECOLLECTIONID")][Key]
+        [NotMapped]
         public int Id { get; set; }
-        [NotMapped]//[Column("TYPE")]
+        [NotMapped]
         public string Type { get; set; }
         [NotMapped]
         public string Name { get; set; }
-        [NotMapped]//[Column("FEATURES")]
+        [NotMapped]
         public List<Features> Features { get; set; }
     }
 }

@@ -49,12 +49,12 @@ namespace Data.Repositories
             var ids = new int[] { };
             switch (tipo.ElementAt(0))
             {
-                case 1: { ids = _dbContext.SFI_GEOCALLES.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                case 2: { ids = _dbContext.SFI_GEOLOTES.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                case 3: { ids = _dbContext.SFI_GEOMANZANAS.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                case 4: { ids = _dbContext.SFI_GEOPARCELAS.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                case 5: { ids = _dbContext.SFI_GEOPUEBLOS.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                case 6: { ids = _dbContext.SFI_GEOUNIDADTS.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 1: { ids = _dbContext.SFI_GEOCALLE.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 2: { ids = _dbContext.SFI_GEOLOTE.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 3: { ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 4: { ids = _dbContext.SFI_GEOPARCELA.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 5: { ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Select(r => r.Id).ToArray(); }; break;
+                case 6: { ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Select(r => r.Id).ToArray(); }; break;
                 default: ids = new int[] { 1 }; break;
             }
 
@@ -67,19 +67,19 @@ namespace Data.Repositories
         }
         public async Task<Lote> GetAllLoteGeom(int id)
         {
-            var result = _dbContext.SFI_GEOLOTES.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOLOTE.Where(t => t.Id == id)
                 .Select(t => new Lote { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Lote> GetLoteGeomByUbigeo(int id, string ubigeo)
         {
-            var result = _dbContext.SFI_GEOLOTES.Where(t => t.Id == id).Where(t => t.Ubigeo == ubigeo)
+            var result = _dbContext.SFI_GEOLOTE.Where(t => t.Id == id).Where(t => t.Ubigeo == ubigeo)
                 .Select(t => new Lote { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Lote> GetAllLoteProps(int id)
         {
-            var result = _dbContext.SFI_GEOLOTES.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOLOTE.Where(t => t.Id == id)
                 .Select(t => new Lote
                 {
                     Nombre = t.Nombre,
@@ -99,7 +99,7 @@ namespace Data.Repositories
         }
         public async Task<Lote> GetLotePropsByUbigeo(int id, string ubigeo)
         {
-            var result = _dbContext.SFI_GEOLOTES.Where(t => t.Id == id).Where(t => t.Ubigeo == ubigeo)
+            var result = _dbContext.SFI_GEOLOTE.Where(t => t.Id == id).Where(t => t.Ubigeo == ubigeo)
                 .Select(t => new Lote
                 {
                     Nombre = t.Nombre,
@@ -119,13 +119,13 @@ namespace Data.Repositories
         }
         public async Task<Calle> GetAllCalleGeom(int id)
         {
-            var result = _dbContext.SFI_GEOCALLES.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOCALLE.Where(t => t.Id == id)
                 .Select(t => new Calle { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Calle> GetAllCalleProps(int id)
         {
-            var result = _dbContext.SFI_GEOCALLES.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOCALLE.Where(t => t.Id == id)
                 .Select(t => new Calle
                 {
                     Nombre = t.Nombre,
@@ -135,13 +135,13 @@ namespace Data.Repositories
         }
         public async Task<Manzana> GetAllManzanaGeom(int id)
         {
-            var result = _dbContext.SFI_GEOMANZANAS.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOMANZANA.Where(t => t.Id == id)
                 .Select(t => new Manzana { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Manzana> GetAllManzanaProps(int id)
         {
-            var result = _dbContext.SFI_GEOMANZANAS.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOMANZANA.Where(t => t.Id == id)
                 .Select(t => new Manzana
                 {
                     Nombre = t.Nombre,
@@ -153,13 +153,13 @@ namespace Data.Repositories
         }
         public async Task<Parcela> GetAllParcelaGeom(int id)
         {
-            var result = _dbContext.SFI_GEOPARCELAS.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOPARCELA.Where(t => t.Id == id)
                 .Select(t => new Parcela { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Parcela> GetAllParcelaProps(int id)
         {
-            var result = _dbContext.SFI_GEOPARCELAS.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOPARCELA.Where(t => t.Id == id)
                 .Select(t => new Parcela
                 {
                     Nombre = t.Nombre,
@@ -170,13 +170,13 @@ namespace Data.Repositories
         }
         public async Task<Pueblo> GetAllPuebloGeom(int id)
         {
-            var result = _dbContext.SFI_GEOPUEBLOS.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOPUEBLO.Where(t => t.Id == id)
                 .Select(t => new Pueblo { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<Pueblo> GetAllPuebloProps(int id)
         {
-            var result = _dbContext.SFI_GEOPUEBLOS.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOPUEBLO.Where(t => t.Id == id)
                 .Select(t => new Pueblo
                 {
                     Nombre = t.Nombre,
@@ -191,13 +191,13 @@ namespace Data.Repositories
         }
         public async Task<UnidadT> GetAllUnidadTGeom(int id)
         {
-            var result = _dbContext.SFI_GEOUNIDADTS.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOUNIDADT.Where(t => t.Id == id)
                 .Select(t => new UnidadT { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
         public async Task<UnidadT> GetAllUnidadTProps(int id)
         {
-            var result = _dbContext.SFI_GEOUNIDADTS.Where(t => t.Id == id)
+            var result = _dbContext.SFI_GEOUNIDADT.Where(t => t.Id == id)
                 .Select(t => new UnidadT
                 {
                     Nombre = t.Nombre,
