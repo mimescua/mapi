@@ -18,27 +18,9 @@ namespace GraphQL.Schema.Types
                 "loteProperties",
                 resolve: context => geoRepository.GetAllLoteProps(context.Source.Id)
             );
-            Field<LotePropertyType>(
-                "sLoteProperties",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "ubigeo" }),
-                resolve: context =>
-                {
-                    var ubigeo = context.GetArgument<string>("ubigeo");
-                    return geoRepository.GetLotePropsByUbigeo(context.Source.Id, ubigeo);
-                }
-            );
-            Field<LoteGeometryType>(//ENMASCARAR NOMBRE A "geometry"
+            Field<LoteGeometryType>(
                 "loteGeometry",
                 resolve: context => geoRepository.GetAllLoteGeom(context.Source.Id)
-            );
-            Field<LoteGeometryType>(
-                "sLoteGeometry",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "ubigeo" }),
-                resolve: context =>
-                {
-                    var ubigeo = context.GetArgument<string>("ubigeo");
-                    return geoRepository.GetLoteGeomByUbigeo(context.Source.Id, ubigeo);
-                }
             );
             Field<CalleGeometryType>(
                 "calleGeometry",

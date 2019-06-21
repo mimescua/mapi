@@ -40,7 +40,6 @@ namespace GraphQL.Client
             services.AddScoped<mapiQuery>();
             services.AddScoped<mapiMutation>();
 
-            services.AddScoped<FeatureCollectionType>();
             services.AddScoped<FeaturesType>();
             services.AddScoped<CalleGeometryType>();
             services.AddScoped<CallePropertyType>();

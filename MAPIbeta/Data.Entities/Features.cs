@@ -13,8 +13,5 @@ namespace Data.Entities
         public int Id { get; set; }
         [NotMapped]
         public string Type { get; set; }
-        [NotMapped]
-        public int FeatureCollectionId { get; set; }
-        public FeatureCollection FeatureCollection { get; set; }
     }
 }

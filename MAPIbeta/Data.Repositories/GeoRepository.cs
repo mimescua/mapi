@@ -15,68 +15,77 @@ namespace Data.Repositories
         {
             _dbContext = dbContext;
         }
-        //public Task<List<FeatureCollection>> GetFeatureCollection()
-        //{
-        //    return _dbContext.FEATURECOLLECTION.ToListAsync();
-        //}
-        public async Task<FeatureCollection> GetFeatureCollection(string tipo)
+        public async Task<List<Features>> GetFeaturesBy(string tipo, string nombre, string ubigeo)
         {
-            //return _dbContext.FEATURECOLLECTION.SingleOrDefault();
-            //FeatureCollection collection = _dbContext.FEATURECOLLECTION.SingleOrDefault();
-            FeatureCollection collection;
-            switch (tipo.ToLower())
-            {
-                case "calle": collection = new FeatureCollection { Id = 1, Name = tipo, Type = "FeatureCollection" }; break;
-                case "lote": collection = new FeatureCollection { Id = 2, Name = tipo, Type = "FeatureCollection" }; break;
-                case "manzana": collection = new FeatureCollection { Id = 3, Name = tipo, Type = "FeatureCollection" }; break;
-                case "parcela": collection = new FeatureCollection { Id = 4, Name = tipo, Type = "FeatureCollection" }; break;
-                case "pueblo": collection = new FeatureCollection { Id = 5, Name = tipo, Type = "FeatureCollection" }; break;
-                case "unidadt": collection = new FeatureCollection { Id = 6, Name = tipo, Type = "FeatureCollection" }; break;
-                default: collection = new FeatureCollection { Id = 0, Name = tipo, Type = "FeatureCollection" }; break;
-            }
-            
-            return collection;
-        }
-        //public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> id)
-        //{
-        //    var result = await _dbContext.SFI_GEOFEATURES.Where(t => id.Contains(t.FeatureCollectionId)).ToListAsync();
-        //    return result.ToLookup(t => t.FeatureCollectionId);
-        //}
-        //public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> id)
-        public async Task<ILookup<int, Features>> GetFeaturesForCollection(IEnumerable<int> tipo)
-        {
-            //int[] ids = new int[] { };
             var ids = new int[] { };
-            switch (tipo.ElementAt(0))
+            if (tipo != "" && nombre != "" && ubigeo != "")
             {
-                case 1: { ids = _dbContext.SFI_GEOCALLE.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                case 2: { ids = _dbContext.SFI_GEOLOTE.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                case 3: { ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                case 4: { ids = _dbContext.SFI_GEOPARCELA.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                case 5: { ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                case 6: { ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Select(r => r.Id).ToArray(); }; break;
-                default: ids = new int[] { 1 }; break;
+                switch (tipo.ToLower())
+                {
+                    case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); ; break;
+                    case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    case "parcela": ids = _dbContext.SFI_GEOPARCELA.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    default: ids = new int[] { 1 }; break;
+                }
             }
-
+            else if (tipo != "" && ubigeo != "")
+            {
+                switch (tipo.ToLower())
+                {
+                    case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); ; break;
+                    case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    case "parcela": ids = _dbContext.SFI_GEOPARCELA.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    default: ids = new int[] { 1 }; break;
+                }
+            }
+            else if (tipo != "" && nombre != "")
+            {
+                switch (tipo.ToLower())
+                {
+                    case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
+                    case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); ; break;
+                    case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
+                    case "parcela": ids = _dbContext.SFI_GEOPARCELA.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
+                    case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
+                    case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
+                    default: ids = new int[] { 1 }; break;
+                }
+            }
+            else
+            {
+                switch (tipo.ToLower())
+                {
+                    case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Select(r => r.Id).ToArray(); break;
+                    case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Select(r => r.Id).ToArray(); ; break;
+                    case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Select(r => r.Id).ToArray(); break;
+                    case "parcela": ids = _dbContext.SFI_GEOPARCELA.AsQueryable().Select(r => r.Id).ToArray(); break;
+                    case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Select(r => r.Id).ToArray(); break;
+                    case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Select(r => r.Id).ToArray(); break;
+                    default: ids = new int[] { 1 }; break;
+                }
+            }
             var result = new List<Features>(ids.Length);
             for (int i = 0; i < ids.Length; i++)
             {
-                result.Add(new Features { Id = ids[i], Type = "Feature", FeatureCollectionId = tipo.ElementAt(0) });
+                result.Add(new Features { Id = ids[i], Type = "Feature" });
             }
-            return result.ToLookup(t => t.FeatureCollectionId);
+            
+            return result.ToList();
         }
+
         public async Task<Lote> GetAllLoteGeom(int id)
         {
             var result = _dbContext.SFI_GEOLOTE.Where(t => t.Id == id)
                 .Select(t => new Lote { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<Lote> GetLoteGeomByUbigeo(int id, string ubigeo)
-        {
-            var result = _dbContext.SFI_GEOLOTE.Where(t => t.Id == id).Where(t => t.Ubigeo == ubigeo)
-                .Select(t => new Lote { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
-            return await result;
-        }
+
         public async Task<Lote> GetAllLoteProps(int id)
         {
             var result = _dbContext.SFI_GEOLOTE.Where(t => t.Id == id)
@@ -97,26 +106,7 @@ namespace Data.Repositories
                 }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<Lote> GetLotePropsByUbigeo(int id, string ubigeo)
-        {
-            var result = _dbContext.SFI_GEOLOTE.Where(t => t.Id == id).Where(t => t.Ubigeo == ubigeo)
-                .Select(t => new Lote
-                {
-                    Nombre = t.Nombre,
-                    Ubigeo = t.Ubigeo,
-                    Area = t.Area,
-                    TipoUso = t.TipoUso,
-                    MedidFrnt = t.MedidFrnt,
-                    MedidIzq = t.MedidIzq,
-                    MedidPost = t.MedidPost,
-                    MedidDer = t.MedidDer,
-                    ColinFrnt = t.ColinFrnt,
-                    ColinIzq = t.ColinIzq,
-                    ColinPost = t.ColinPost,
-                    ColinDer = t.ColinDer,
-                }).SingleOrDefaultAsync();
-            return await result;
-        }
+
         public async Task<Calle> GetAllCalleGeom(int id)
         {
             var result = _dbContext.SFI_GEOCALLE.Where(t => t.Id == id)

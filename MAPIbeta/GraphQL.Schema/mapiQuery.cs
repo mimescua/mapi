@@ -11,18 +11,23 @@ namespace GraphQL.Schema
     {
         public mapiQuery(GeoRepository geoRepository)
         {
-            //Field<ListGraphType<FeatureCollectionType>>(
-            //    "FeatureCollection",
-            //    resolve: context => geoRepository.GetFeatureCollection()
-            //);
-
-            Field<FeatureCollectionType>(
-                "FeatureCollection",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tipo" }),
+            Field<StringGraphType>(
+                "type",
+                resolve: context => "FeatureCollection"
+                );
+            Field<ListGraphType<FeaturesType>>(
+                "features",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tipo" },
+                    new QueryArgument<StringGraphType> { Name = "nombre" },
+                    new QueryArgument<StringGraphType> { Name = "ubigeo" }
+                ),
                 resolve: context =>
                 {
                     var tipo = context.GetArgument<string>("tipo");
-                    return geoRepository.GetFeatureCollection(tipo);
+                    var nombre = context.GetArgument<string>("nombre");
+                    var ubigeo = context.GetArgument<string>("ubigeo");
+                    return geoRepository.GetFeaturesBy(tipo,nombre,ubigeo);
                 }
             );
         }

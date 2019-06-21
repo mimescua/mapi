@@ -19,7 +19,5 @@ namespace Data.Repositories
         public DbSet<Parcela> SFI_GEOPARCELA { get; set; }
         public DbSet<Pueblo> SFI_GEOPUEBLO { get; set; }
         public DbSet<UnidadT> SFI_GEOUNIDADT { get; set; }
-        //public DbSet<Features> SFI_GEOFEATURES { get; set; }
-        //public DbSet<FeatureCollection> SFI_GEOFEATURECOLLECTION { get; set; }
     }
 }
