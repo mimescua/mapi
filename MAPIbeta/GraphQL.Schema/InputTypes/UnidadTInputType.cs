@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GraphQL.Schema.Types
+namespace GraphQL.Schema.InputTypes
 {
     public class UnidadTInputType : InputObjectGraphType
     {

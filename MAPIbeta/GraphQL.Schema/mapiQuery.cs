@@ -9,7 +9,7 @@ namespace GraphQL.Schema
 {
     public class mapiQuery : ObjectGraphType
     {
-        public mapiQuery(GeoRepository geoRepository)
+        public mapiQuery(ReadRepository readRepository)
         {
             Field<StringGraphType>(
                 "type",
@@ -27,7 +27,29 @@ namespace GraphQL.Schema
                     var tipo = context.GetArgument<string>("tipo");
                     var nombre = context.GetArgument<string>("nombre");
                     var ubigeo = context.GetArgument<string>("ubigeo");
-                    return geoRepository.GetFeaturesBy(tipo,nombre,ubigeo);
+                    return readRepository.GetFeaturesBy(tipo,nombre,ubigeo);
+                }
+            );
+            Field<ListGraphType<FormalizacionType>>(
+                "puebloexistente",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "codpueblo" }
+                ),
+                resolve: context =>
+                {
+                    var codpueblo = context.GetArgument<string>("codpueblo");
+                    return readRepository.GetPuebloExistenteByUbigeo(codpueblo);
+                }
+            );
+            Field<ListGraphType<CentroideType>>(
+                "centroide",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "centroide" }
+                ),
+                resolve: context =>
+                {
+                    var centroide = context.GetArgument<string>("centroide");
+                    return readRepository.GetCentroidesByUbigeo(centroide);
                 }
             );
         }

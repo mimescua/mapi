@@ -1,6 +1,7 @@
 ﻿using Data.Entities;
 using Data.Repositories;
 using GraphQL.Schema.Types;
+using GraphQL.Schema.InputTypes;
 using GraphQL.Types;
 using System;
 using System.Collections.Generic;

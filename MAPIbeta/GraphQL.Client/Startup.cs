@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Data.Repositories;
 using GraphQL.Schema;
+using GraphQL.Schema.InputTypes;
 using GraphQL.Schema.Types;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
@@ -33,7 +34,8 @@ namespace GraphQL.Client
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<OracleDbContext>(options => options.UseOracle(Configuration["ConnectionStrings:OracleConnection"]));
-            services.AddScoped<GeoRepository>();
+            services.AddDbContext<SecurityDbContext>(options => options.UseOracle(Configuration["ConnectionStrings:SecurityConnection"]));
+            services.AddScoped<ReadRepository>();
             services.AddScoped<AddRepository>();
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
@@ -53,8 +55,13 @@ namespace GraphQL.Client
             services.AddScoped<PuebloPropertyType>();
             services.AddScoped<UnidadTGeometryType>();
             services.AddScoped<UnidadTPropertyType>();
+
+            services.AddScoped<FormalizacionType>();
+
             services.AddScoped<UnidadTInputType>();
             services.AddScoped<UnidadTType>();
+            
+            services.AddScoped<CentroideType>();
 
             services.AddScoped<mapiSchema>();
 

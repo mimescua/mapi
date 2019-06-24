@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace Data.Repositories
 {
-    public class GeoRepository
+    public class ReadRepository
     {
         private readonly OracleDbContext _dbContext;
-        public GeoRepository(OracleDbContext dbContext)
+        private readonly SecurityDbContext _secContext;
+        public ReadRepository(OracleDbContext dbContext, SecurityDbContext secContext)
         {
             _dbContext = dbContext;
+            _secContext = secContext;
         }
         public async Task<List<Features>> GetFeaturesBy(string tipo, string nombre, string ubigeo)
         {
@@ -194,6 +196,17 @@ namespace Data.Repositories
                     Ubigeo = t.Ubigeo,
                 }).SingleOrDefaultAsync();
             return await result;
+        }
+
+        public Task<List<Formalizacion>> GetPuebloExistenteByUbigeo(string codpueblo)
+        {
+            return _dbContext.SFI_PUEBLOEXISTENTE.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.Id.ToString(), codpueblo + "%")).ToListAsync();
+        }
+
+        public Task<List<Centroide>> GetCentroidesByUbigeo(string centroide)
+        {
+            //return _secContext.SFI_CENTROIDE.Where(t => t.Id == id).ToListAsync();
+            return _secContext.SFI_CENTROIDE.Where(t => EF.Functions.Like(t.Distrito.ToUpper(), centroide.ToUpper() + "%")).ToListAsync();
         }
     }
 }

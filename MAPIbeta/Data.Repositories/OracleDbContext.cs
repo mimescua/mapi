@@ -19,5 +19,15 @@ namespace Data.Repositories
         public DbSet<Parcela> SFI_GEOPARCELA { get; set; }
         public DbSet<Pueblo> SFI_GEOPUEBLO { get; set; }
         public DbSet<UnidadT> SFI_GEOUNIDADT { get; set; }
+        public DbSet<Formalizacion> SFI_PUEBLOEXISTENTE { get; set; }
+    }
+
+    public class SecurityDbContext : DbContext
+    {
+        public SecurityDbContext(DbContextOptions<SecurityDbContext> options) : base(options)
+        {
+            Database.EnsureCreated();
+        }
+        public DbSet<Centroide> SFI_CENTROIDE { get; set; }
     }
 }
