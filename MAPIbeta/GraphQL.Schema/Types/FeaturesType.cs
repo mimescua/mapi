@@ -14,54 +14,66 @@ namespace GraphQL.Schema.Types
         {
             Name = "Features";
             Field(t => t.Type).Description("Feature type");
-            Field<LotePropertyType>(
-                "loteProperties",
-                resolve: context => readRepository.GetAllLoteProps(context.Source.Id)
-            );
-            Field<LoteGeometryType>(
-                "loteGeometry",
-                resolve: context => readRepository.GetAllLoteGeom(context.Source.Id)
-            );
-            Field<CalleGeometryType>(
-                "calleGeometry",
-                resolve: context => readRepository.GetAllCalleGeom(context.Source.Id)
-            );
-            Field<CallePropertyType>(
-                "calleProperties",
-                resolve: context => readRepository.GetAllCalleProps(context.Source.Id)
-            );
-            Field<ManzanaGeometryType>(
-                "manzanaGeometry",
-                resolve: context => readRepository.GetAllManzanaGeom(context.Source.Id)
-            );
-            Field<ManzanaPropertyType>(
-                "manzanaProperties",
-                resolve: context => readRepository.GetAllManzanaProps(context.Source.Id)
-            );
-            Field<ParcelaGeometryType>(
-                "parcelaGeometry",
-                resolve: context => readRepository.GetAllParcelaGeom(context.Source.Id)
-            );
-            Field<ParcelaPropertyType>(
-                "parcelaProperties",
-                resolve: context => readRepository.GetAllParcelaProps(context.Source.Id)
-            );
-            Field<PuebloGeometryType>(
-                "puebloGeometry",
-                resolve: context => readRepository.GetAllPuebloGeom(context.Source.Id)
-            );
-            Field<PuebloPropertyType>(
-                "puebloProperties",
-                resolve: context => readRepository.GetAllPuebloProps(context.Source.Id)
-            );
-            Field<UnidadTGeometryType>(
-                "unidadtGeometry",
-                resolve: context => readRepository.GetAllUnidadTGeom(context.Source.Id)
-            );
-            Field<UnidadTPropertyType>(
-                "unidadtProperties",
-                resolve: context => readRepository.GetAllUnidadTProps(context.Source.Id)
-            );
+            Field<LotePropertyType, Lote>().Name("loteProperties").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Lote>("lotePropertiesPorId", readRepository.GetSomeLotesByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<LoteGeometryType, Lote>().Name("loteGeometry").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Lote>("loteGeometryPorId", readRepository.GetSomeLotesByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<CalleGeometryType, Calle>().Name("calleGeometry").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Calle>("calleGeometryPorId", readRepository.GetSomeCallessByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<CallePropertyType, Calle>().Name("calleProperties").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Calle>("callePropertiesPorId", readRepository.GetSomeCallessByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<ManzanaGeometryType, Manzana>().Name("manzanaGeometry").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Manzana>("manzanaGeometryPorId", readRepository.GetSomeManzanassByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<ManzanaPropertyType, Manzana>().Name("manzanaProperties").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Manzana>("manzanaPropertiesPorId", readRepository.GetSomeManzanassByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<ParcelaGeometryType, Parcela>().Name("parcelaGeometry").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Parcela>("parcelaGeometryPorId", readRepository.GetSomeParcelasByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<ParcelaPropertyType, Parcela>().Name("parcelaProperties").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Parcela>("parcelaPropertiesPorId", readRepository.GetSomeParcelasByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<PuebloGeometryType, Pueblo>().Name("puebloGeometry").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Pueblo>("puebloGeometryPorId", readRepository.GetSomePueblosByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<PuebloPropertyType, Pueblo>().Name("puebloProperties").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Pueblo>("puebloPropertiesPorId", readRepository.GetSomePueblosByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<UnidadTGeometryType, UnidadT>().Name("unidadtGeometry").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, UnidadT>("unidadtGeometryPorId", readRepository.GetSomeUnidaTsByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
+            Field<UnidadTPropertyType, UnidadT>().Name("unidadtProperties").ResolveAsync(context =>
+            {
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, UnidadT>("unidadtPropertiesPorId", readRepository.GetSomeUnidaTsByIdAsync);
+                return loader.LoadAsync(context.Source.Id);
+            });
         }
     }
 }

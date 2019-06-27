@@ -39,6 +39,7 @@ namespace GraphQL.Client
             services.AddScoped<AddRepository>();
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<mapiSchema>();
             services.AddScoped<mapiQuery>();
             services.AddScoped<mapiMutation>();
 
@@ -62,8 +63,6 @@ namespace GraphQL.Client
             services.AddScoped<UnidadTType>();
             
             services.AddScoped<CentroideType>();
-
-            services.AddScoped<mapiSchema>();
 
             services.AddGraphQL(o => { o.ExposeExceptions = true; })
                 .AddGraphTypes(ServiceLifetime.Scoped)

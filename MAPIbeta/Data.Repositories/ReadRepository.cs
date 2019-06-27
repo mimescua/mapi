@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Data.Repositories
@@ -77,18 +78,53 @@ namespace Data.Repositories
             {
                 result.Add(new Features { Id = ids[i], Type = "Feature" });
             }
-            
+
             return result.ToList();
         }
 
-        public async Task<Lote> GetAllLoteGeom(int id)
+        //Retrieving batch type collection AS LIST TYPE by id
+        public async Task<IDictionary<int, Lote>> GetSomeLotesByIdAsync(IEnumerable<int> loteIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOLOTE.Where(i => loteIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<int, Calle>> GetSomeCallessByIdAsync(IEnumerable<int> calleIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOCALLE.Where(i => calleIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<int, Manzana>> GetSomeManzanassByIdAsync(IEnumerable<int> manzanaIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOMANZANA.Where(i => manzanaIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<int, Parcela>> GetSomeParcelasByIdAsync(IEnumerable<int> parcelaIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOPARCELA.Where(i => parcelaIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<int, Pueblo>> GetSomePueblosByIdAsync(IEnumerable<int> puebloIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOPUEBLO.Where(i => puebloIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<int, UnidadT>> GetSomeUnidaTsByIdAsync(IEnumerable<int> unidadtIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOUNIDADT.Where(i => unidadtIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+        //Retrieving batch type collection AS LIST(inside array) by id
+        public async Task<ILookup<int, Lote>> GetForFeatures(IEnumerable<int> featureIds)
+        {
+            var lotes = await _dbContext.SFI_GEOLOTE.Where(
+            lt => featureIds.Contains(lt.Id))
+            .ToListAsync();
+            return lotes.ToLookup(t => t.Id);
+        }
+
+        //Retrieving a SINGLE type by id
+        public async Task<Lote> GetLoteGeomById(int id)
         {
             var result = _dbContext.SFI_GEOLOTE.Where(t => t.Id == id)
                 .Select(t => new Lote { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
-
-        public async Task<Lote> GetAllLoteProps(int id)
+        public async Task<Lote> GetLotePropsById(int id)
         {
             var result = _dbContext.SFI_GEOLOTE.Where(t => t.Id == id)
                 .Select(t => new Lote
@@ -108,14 +144,13 @@ namespace Data.Repositories
                 }).SingleOrDefaultAsync();
             return await result;
         }
-
-        public async Task<Calle> GetAllCalleGeom(int id)
+        public async Task<Calle> GetCalleGeomById(int id)
         {
             var result = _dbContext.SFI_GEOCALLE.Where(t => t.Id == id)
                 .Select(t => new Calle { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<Calle> GetAllCalleProps(int id)
+        public async Task<Calle> GetCallePropsById(int id)
         {
             var result = _dbContext.SFI_GEOCALLE.Where(t => t.Id == id)
                 .Select(t => new Calle
@@ -125,13 +160,13 @@ namespace Data.Repositories
                 }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<Manzana> GetAllManzanaGeom(int id)
+        public async Task<Manzana> GetManzanaGeomById(int id)
         {
             var result = _dbContext.SFI_GEOMANZANA.Where(t => t.Id == id)
                 .Select(t => new Manzana { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<Manzana> GetAllManzanaProps(int id)
+        public async Task<Manzana> GetManzanaPropsById(int id)
         {
             var result = _dbContext.SFI_GEOMANZANA.Where(t => t.Id == id)
                 .Select(t => new Manzana
@@ -143,13 +178,13 @@ namespace Data.Repositories
                 }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<Parcela> GetAllParcelaGeom(int id)
+        public async Task<Parcela> GetParcelaGeomById(int id)
         {
             var result = _dbContext.SFI_GEOPARCELA.Where(t => t.Id == id)
                 .Select(t => new Parcela { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<Parcela> GetAllParcelaProps(int id)
+        public async Task<Parcela> GetParcelaPropsById(int id)
         {
             var result = _dbContext.SFI_GEOPARCELA.Where(t => t.Id == id)
                 .Select(t => new Parcela
@@ -160,13 +195,13 @@ namespace Data.Repositories
                 }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<Pueblo> GetAllPuebloGeom(int id)
+        public async Task<Pueblo> GetPuebloGeomById(int id)
         {
             var result = _dbContext.SFI_GEOPUEBLO.Where(t => t.Id == id)
                 .Select(t => new Pueblo { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<Pueblo> GetAllPuebloProps(int id)
+        public async Task<Pueblo> GetPuebloPropsById(int id)
         {
             var result = _dbContext.SFI_GEOPUEBLO.Where(t => t.Id == id)
                 .Select(t => new Pueblo
@@ -181,13 +216,13 @@ namespace Data.Repositories
                 }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<UnidadT> GetAllUnidadTGeom(int id)
+        public async Task<UnidadT> GetUnidadTGeomById(int id)
         {
             var result = _dbContext.SFI_GEOUNIDADT.Where(t => t.Id == id)
                 .Select(t => new UnidadT { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<UnidadT> GetAllUnidadTProps(int id)
+        public async Task<UnidadT> GetUnidadTPropsById(int id)
         {
             var result = _dbContext.SFI_GEOUNIDADT.Where(t => t.Id == id)
                 .Select(t => new UnidadT
@@ -202,7 +237,6 @@ namespace Data.Repositories
         {
             return _dbContext.SFI_PUEBLOEXISTENTE.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.Id.ToString(), codpueblo + "%")).ToListAsync();
         }
-
         public Task<List<Centroide>> GetCentroidesByUbigeo(string centroide)
         {
             //return _secContext.SFI_CENTROIDE.Where(t => t.Id == id).ToListAsync();
