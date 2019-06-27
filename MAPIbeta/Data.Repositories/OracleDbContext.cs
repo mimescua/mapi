@@ -16,7 +16,6 @@ namespace Data.Repositories
         public DbSet<Lote> SFI_GEOLOTE { get; set; }
         public DbSet<Calle> SFI_GEOCALLE { get; set; }
         public DbSet<Manzana> SFI_GEOMANZANA { get; set; }
-        public DbSet<Parcela> SFI_GEOPARCELA { get; set; }
         public DbSet<Pueblo> SFI_GEOPUEBLO { get; set; }
         public DbSet<UnidadT> SFI_GEOUNIDADT { get; set; }
         public DbSet<Formalizacion> SFI_PUEBLOEXISTENTE { get; set; }

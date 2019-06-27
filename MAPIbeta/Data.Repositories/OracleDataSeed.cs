@@ -27,30 +27,15 @@ namespace Data.Repositories
                 dbContext.SFI_GEOPUEBLO.Add(new Pueblo
                 {
                     Id = 1,
-                    UnidadTId = 1,//xtra
                     Type = "MultiPolygon",
                     Coordinates = "[[[[-77.12698459625244,-12.059738871016993],[-77.11921691894531,-12.065551405810487],[-77.11305856704712,-12.056738126848984],[-77.12698459625244,-12.059738871016993]]]]",
                     Nombre = "XR1",
                     Ubigeo = "01",
-                    CantParcelas = 1,
+                    NomParcela = "1",
                     Area = 2.1,
                     AreaVivienda = 2.1,
                     AreaComunal = 2.1,
                     AreaEducacion = 2.1,
-                });
-                dbContext.SaveChanges();
-            }
-            if (!dbContext.SFI_GEOPARCELA.Any())
-            {
-                dbContext.SFI_GEOPARCELA.Add(new Parcela
-                {
-                    Id = 1,
-                    PuebloId = 1,//xtra
-                    Type = "MultiPolygon",
-                    Coordinates = "[[[[-77.12724208831787,-12.064670090950587],[-77.12634086608887,-12.064670090950587],[-77.12634086608887,-12.063935659687319],[-77.12724208831787,-12.063935659687319],[-77.12724208831787,-12.064670090950587]]]]",
-                    Nombre = "Sub-Pueblo A",
-                    Ubigeo = "01",
-                    Area = 2.1,
                 });
                 dbContext.SaveChanges();
             }
@@ -60,7 +45,6 @@ namespace Data.Repositories
                 {
                     Id = 1,
                     PuebloId = 1,//xtra
-                    ParcelaId = 1,//xtra
                     Type = "Polygon",
                     Coordinates = "[[[[-77.12724208831787,-12.064670090950587],[-77.12634086608887,-12.064670090950587],[-77.12634086608887,-12.063935659687319],[-77.12724208831787,-12.063935659687319],[-77.12724208831787,-12.064670090950587]]]]",
                     Nombre = "A",

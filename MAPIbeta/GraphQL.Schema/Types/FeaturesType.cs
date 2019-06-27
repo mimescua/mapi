@@ -36,22 +36,12 @@ namespace GraphQL.Schema.Types
             });
             Field<ManzanaGeometryType, Manzana>().Name("manzanaGeometry").ResolveAsync(context =>
             {
-                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Manzana>("manzanaGeometryPorId", readRepository.GetSomeManzanassByIdAsync);
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Manzana>("manzanaGeometryPorId", readRepository.GetSomeManzanasByIdAsync);
                 return loader.LoadAsync(context.Source.Id);
             });
             Field<ManzanaPropertyType, Manzana>().Name("manzanaProperties").ResolveAsync(context =>
             {
-                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Manzana>("manzanaPropertiesPorId", readRepository.GetSomeManzanassByIdAsync);
-                return loader.LoadAsync(context.Source.Id);
-            });
-            Field<ParcelaGeometryType, Parcela>().Name("parcelaGeometry").ResolveAsync(context =>
-            {
-                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Parcela>("parcelaGeometryPorId", readRepository.GetSomeParcelasByIdAsync);
-                return loader.LoadAsync(context.Source.Id);
-            });
-            Field<ParcelaPropertyType, Parcela>().Name("parcelaProperties").ResolveAsync(context =>
-            {
-                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Parcela>("parcelaPropertiesPorId", readRepository.GetSomeParcelasByIdAsync);
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Manzana>("manzanaPropertiesPorId", readRepository.GetSomeManzanasByIdAsync);
                 return loader.LoadAsync(context.Source.Id);
             });
             Field<PuebloGeometryType, Pueblo>().Name("puebloGeometry").ResolveAsync(context =>

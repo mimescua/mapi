@@ -13,10 +13,6 @@ namespace Data.Entities
         public int Id { get; set; }
 
         public List<Manzana> Manzanas { get; set; }
-        public List<Parcela> Parcelas { get; set; }
-        [Column("UNIDADTID")]
-        public int UnidadTId { get; set; }
-        public UnidadT UnidadT { get; set; }
 
         [Column("TYPE")]
         public string Type { get; set; }
@@ -27,8 +23,8 @@ namespace Data.Entities
         public string Nombre { get; set; }
         [Column("UBIGEO")]
         public string Ubigeo { get; set; }
-        [Column("CANTPARCELAS")]
-        public int CantParcelas { get; set; }
+        [Column("NOMPARCELA")]
+        public string NomParcela { get; set; }
         [Column("AREA")]
         public double Area { get; set; }//AreaBruta
 

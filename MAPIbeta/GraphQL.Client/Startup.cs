@@ -50,8 +50,6 @@ namespace GraphQL.Client
             services.AddScoped<LotePropertyType>();
             services.AddScoped<ManzanaGeometryType>();
             services.AddScoped<ManzanaPropertyType>();
-            services.AddScoped<ParcelaGeometryType>();
-            services.AddScoped<ParcelaPropertyType>();
             services.AddScoped<PuebloGeometryType>();
             services.AddScoped<PuebloPropertyType>();
             services.AddScoped<UnidadTGeometryType>();

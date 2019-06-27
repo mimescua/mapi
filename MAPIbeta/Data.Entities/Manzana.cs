@@ -14,9 +14,7 @@ namespace Data.Entities
 
         public List<Calle> Calles { get; set; }
         public List<Lote> Lotes { get; set; }
-        [Column("PARCELAID")]
-        public int ParcelaId { get; set; }
-        public Parcela Parcela { get; set; }
+
         [Column("PUEBLOID")]
         public int PuebloId { get; set; }
         public Pueblo Pueblo { get; set; }

@@ -28,7 +28,6 @@ namespace Data.Repositories
                     case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
                     case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); ; break;
                     case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
-                    case "parcela": ids = _dbContext.SFI_GEOPARCELA.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
                     case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
                     case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
                     default: ids = new int[] { 1 }; break;
@@ -41,7 +40,6 @@ namespace Data.Repositories
                     case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
                     case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); ; break;
                     case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
-                    case "parcela": ids = _dbContext.SFI_GEOPARCELA.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
                     case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
                     case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
                     default: ids = new int[] { 1 }; break;
@@ -54,7 +52,6 @@ namespace Data.Repositories
                     case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
                     case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); ; break;
                     case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
-                    case "parcela": ids = _dbContext.SFI_GEOPARCELA.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
                     case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
                     case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
                     default: ids = new int[] { 1 }; break;
@@ -67,7 +64,6 @@ namespace Data.Repositories
                     case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Select(r => r.Id).ToArray(); break;
                     case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Select(r => r.Id).ToArray(); ; break;
                     case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Select(r => r.Id).ToArray(); break;
-                    case "parcela": ids = _dbContext.SFI_GEOPARCELA.AsQueryable().Select(r => r.Id).ToArray(); break;
                     case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Select(r => r.Id).ToArray(); break;
                     case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Select(r => r.Id).ToArray(); break;
                     default: ids = new int[] { 1 }; break;
@@ -91,13 +87,9 @@ namespace Data.Repositories
         {
             return await _dbContext.SFI_GEOCALLE.Where(i => calleIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
-        public async Task<IDictionary<int, Manzana>> GetSomeManzanassByIdAsync(IEnumerable<int> manzanaIds, CancellationToken token)
+        public async Task<IDictionary<int, Manzana>> GetSomeManzanasByIdAsync(IEnumerable<int> manzanaIds, CancellationToken token)
         {
             return await _dbContext.SFI_GEOMANZANA.Where(i => manzanaIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
-        }
-        public async Task<IDictionary<int, Parcela>> GetSomeParcelasByIdAsync(IEnumerable<int> parcelaIds, CancellationToken token)
-        {
-            return await _dbContext.SFI_GEOPARCELA.Where(i => parcelaIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<int, Pueblo>> GetSomePueblosByIdAsync(IEnumerable<int> puebloIds, CancellationToken token)
         {
@@ -178,23 +170,6 @@ namespace Data.Repositories
                 }).SingleOrDefaultAsync();
             return await result;
         }
-        public async Task<Parcela> GetParcelaGeomById(int id)
-        {
-            var result = _dbContext.SFI_GEOPARCELA.Where(t => t.Id == id)
-                .Select(t => new Parcela { Type = t.Type, Coordinates = t.Coordinates }).SingleOrDefaultAsync();
-            return await result;
-        }
-        public async Task<Parcela> GetParcelaPropsById(int id)
-        {
-            var result = _dbContext.SFI_GEOPARCELA.Where(t => t.Id == id)
-                .Select(t => new Parcela
-                {
-                    Nombre = t.Nombre,
-                    Ubigeo = t.Ubigeo,
-                    Area = t.Area,
-                }).SingleOrDefaultAsync();
-            return await result;
-        }
         public async Task<Pueblo> GetPuebloGeomById(int id)
         {
             var result = _dbContext.SFI_GEOPUEBLO.Where(t => t.Id == id)
@@ -208,7 +183,7 @@ namespace Data.Repositories
                 {
                     Nombre = t.Nombre,
                     Ubigeo = t.Ubigeo,
-                    CantParcelas = t.CantParcelas,
+                    NomParcela = t.NomParcela,
                     Area = t.Area,
                     AreaVivienda = t.AreaVivienda,
                     AreaComunal = t.AreaComunal,
