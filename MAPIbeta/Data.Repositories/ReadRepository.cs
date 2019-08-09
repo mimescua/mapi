@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using System.Data.SqlClient;
 
 namespace Data.Repositories
 {
@@ -18,54 +20,30 @@ namespace Data.Repositories
             _dbContext = dbContext;
             _secContext = secContext;
         }
-        public async Task<List<Features>> GetFeaturesBy(string tipo, string nombre, string ubigeo)
+        public async Task<List<Features>> GetFeaturesBy(string tipo, List<double> extent, string plano)
         {
             var ids = new int[] { };
-            if (tipo != "" && nombre != "" && ubigeo != "")
+
+            if (plano == "")
             {
                 switch (tipo.ToLower())
                 {
-                    case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
-                    case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); ; break;
-                    case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
-                    case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
-                    case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Where(r => r.Nombre == nombre).Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
+                    case "calle": ids = _dbContext.SFI_GEOCALLE.FromSql($"Select t.CALLEID from SFI_GEOCALLE t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE'").Select(x => x.Id).Take(1000).ToArray(); break;
+                    case "lote": ids = _dbContext.SFI_GEOLOTE.FromSql($"Select t.LOTEID from SFI_GEOLOTE t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE'").Select(x => x.Id).Take(1000).ToArray(); break;
+                    case "manzana": ids = _dbContext.SFI_GEOMANZANA.FromSql($"Select t.MANZANAID from SFI_GEOMANZANA t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE'").Select(x => x.Id).Take(1000).ToArray(); break;
+                    case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.FromSql($"Select t.PUEBLOID from SFI_GEOPUEBLO t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE'").Select(x => x.Id).Take(1000).ToArray(); break;
+                    case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.FromSql($"Select t.UNIDADTID from SFI_GEOUNIDADT t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE'").Select(x => x.Id).Take(1000).ToArray(); break;
                     default: ids = new int[] { 1 }; break;
                 }
             }
-            else if (tipo != "" && ubigeo != "")
+            else if (extent.Count() == 0)
             {
                 switch (tipo.ToLower())
                 {
-                    case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
-                    case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); ; break;
-                    case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
-                    case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
-                    case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).ToArray(); break;
-                    default: ids = new int[] { 1 }; break;
-                }
-            }
-            else if (tipo != "" && nombre != "")
-            {
-                switch (tipo.ToLower())
-                {
-                    case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
-                    case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); ; break;
-                    case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
-                    case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
-                    case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Where(r => r.Nombre == nombre).Select(r => r.Id).ToArray(); break;
-                    default: ids = new int[] { 1 }; break;
-                }
-            }
-            else
-            {
-                switch (tipo.ToLower())
-                {
-                    case "calle": ids = _dbContext.SFI_GEOCALLE.AsQueryable().Select(r => r.Id).ToArray(); break;
-                    case "lote": ids = _dbContext.SFI_GEOLOTE.AsQueryable().Select(r => r.Id).ToArray(); ; break;
-                    case "manzana": ids = _dbContext.SFI_GEOMANZANA.AsQueryable().Select(r => r.Id).ToArray(); break;
-                    case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Select(r => r.Id).ToArray(); break;
-                    case "unidadt": ids = _dbContext.SFI_GEOUNIDADT.AsQueryable().Select(r => r.Id).ToArray(); break;
+                    case "calle": ids = (from o in _dbContext.SFI_GEOCALLE join p in _dbContext.SFI_GEOPUEBLO on o.PuebloId equals p.Id where p.PlanoId == Convert.ToInt32(plano) select o.Id ).Take(1000).ToArray(); break;
+                    case "lote": ids = (from o in _dbContext.SFI_GEOLOTE join p in _dbContext.SFI_GEOPUEBLO on o.PuebloId equals p.Id where p.PlanoId == Convert.ToInt32(plano) select o.Id ).Take(1000).ToArray(); break;
+                    case "manzana": ids = (from o in _dbContext.SFI_GEOMANZANA join p in _dbContext.SFI_GEOPUEBLO on o.PuebloId equals p.Id where p.PlanoId == Convert.ToInt32(plano) select o.Id ).Take(1000).ToArray(); break;
+                    case "pueblo": ids = _dbContext.SFI_GEOPUEBLO.AsQueryable().Where(r => r.PlanoId == Convert.ToInt32(plano)).Select(r => r.Id).Take(1000).ToArray(); break;
                     default: ids = new int[] { 1 }; break;
                 }
             }
@@ -78,12 +56,75 @@ namespace Data.Repositories
             return result.ToList();
         }
 
+        public async Task<List<Formalizados>> GetFormalizadosBy(string tipo, double[] extent)
+        {
+            var ids = new string[] { };
+            //using (SqlConnection sql = new SqlConnection(_dbContext))
+            if (tipo != "" && extent != null)
+            {
+                switch (tipo.ToLower())
+                {
+                    //case "calle": ids = _dbContext.BMAP_CALLE.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).Take(1000).ToArray(); break;
+                    //case "lote": ids = _dbContext.BMAP_LOTE.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).Take(1000).ToArray(); ; break;
+                    //case "manzana": ids = _dbContext.BMAP_MANZANA.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).Take(1000).ToArray(); break;
+                    //case "pueblo": ids = _dbContext.BMAP_PUEBLO.AsQueryable().Where(r => r.Ubigeo == ubigeo).Select(r => r.Id).Take(1000).ToArray(); break;
+                    case "calle":
+                        {
+                            ids = _dbContext.BMAP_CALLE.FromSql($"Select t.OID from BMAP_CALLE t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE'").Select(X => X.Id).Take(1000).ToArray();
+                        }; break;
+                    case "lote":
+                        {
+                            ids = _dbContext.BMAP_LOTE.FromSql($"Select t.OID from BMAP_LOTE t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE'").Select(X => X.Id).Take(1000).ToArray();
+                        }; break;
+                    case "manzana":
+                        {
+                            ids = _dbContext.BMAP_MANZANA.FromSql($"Select t.OID from BMAP_MANZANA t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE'").Select(X => X.Id).Take(1000).ToArray();
+                        }; break;
+                    case "pueblo":
+                        {
+                            ids = _dbContext.BMAP_PUEBLO.FromSql($"Select t.OID from BMAP_PUEBLO t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE'").Select(X=>X.Id).Take(1000).ToArray();
+                        }; break;
+                    default: ids = new string[] { "1" }; break;
+                }
+            }
+            else if (tipo != "")
+            {
+                switch (tipo.ToLower())
+                {
+                    case "calle":
+                        {
+                            ids = _dbContext.BMAP_CALLE.FromSql($"Select t.OID from BMAP_CALLE t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY(-81.3282304899999531,-18.3509277359999601, -68.6522791029999553,-0.0386059679999562)), 'mask = anyinteract') = 'TRUE'").Select(X => X.Id).Take(1000).ToArray();
+                        }; break;
+                    case "lote":
+                        {
+                            ids = _dbContext.BMAP_LOTE.FromSql($"Select t.OID from BMAP_LOTE t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY(-81.3282304899999531,-18.3509277359999601, -68.6522791029999553,-0.0386059679999562)), 'mask = anyinteract') = 'TRUE'").Select(X => X.Id).Take(1000).ToArray();
+                        }; break;
+                    case "manzana":
+                        {
+                            ids = _dbContext.BMAP_MANZANA.FromSql($"Select t.OID from BMAP_MANZANA t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY(-81.3282304899999531,-18.3509277359999601, -68.6522791029999553,-0.0386059679999562)), 'mask = anyinteract') = 'TRUE'").Select(X => X.Id).Take(1000).ToArray();
+                        }; break;
+                    case "pueblo":
+                        {
+                            ids = _dbContext.BMAP_PUEBLO.FromSql($"Select t.OID from BMAP_PUEBLO t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY(-81.3282304899999531,-18.3509277359999601, -68.6522791029999553,-0.0386059679999562)), 'mask = anyinteract') = 'TRUE'").Select(X => X.Id).Take(1000).ToArray();
+                        }; break;
+                    default: ids = new string[] { "1" }; break;
+                }
+            }
+            var result = new List<Formalizados>(ids.Length);
+            for (int i = 0; i < ids.Length; i++)
+            {
+                result.Add(new Formalizados { Id = ids[i], Type = "Feature" });
+            }
+
+            return result.ToList();
+        }
+
         //Retrieving batch type collection AS LIST TYPE by id
         public async Task<IDictionary<int, Lote>> GetSomeLotesByIdAsync(IEnumerable<int> loteIds, CancellationToken token)
         {
             return await _dbContext.SFI_GEOLOTE.Where(i => loteIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
-        public async Task<IDictionary<int, Calle>> GetSomeCallessByIdAsync(IEnumerable<int> calleIds, CancellationToken token)
+        public async Task<IDictionary<int, Calle>> GetSomeCallesByIdAsync(IEnumerable<int> calleIds, CancellationToken token)
         {
             return await _dbContext.SFI_GEOCALLE.Where(i => calleIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
@@ -98,6 +139,105 @@ namespace Data.Repositories
         public async Task<IDictionary<int, UnidadT>> GetSomeUnidaTsByIdAsync(IEnumerable<int> unidadtIds, CancellationToken token)
         {
             return await _dbContext.SFI_GEOUNIDADT.Where(i => unidadtIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+        public async Task<IDictionary<string, baseLote>> GetSome_bLotesByIdAsync(IEnumerable<string> loteIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_LOTE.Where(i => loteIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<string, baseCalle>> GetSome_bCallesByIdAsync(IEnumerable<string> calleIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_CALLE.Where(i => calleIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<string, baseManzana>> GetSome_bManzanasByIdAsync(IEnumerable<string> manzanaIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_MANZANA.Where(i => manzanaIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<string, basePueblo>> GetSome_bPueblosByIdAsync(IEnumerable<string> puebloIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_PUEBLO.Where(i => puebloIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+        public async Task<IDictionary<string, baseLote>> GetSomeGeom_bLotesByIdAsync(IEnumerable<string> loteIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_LOTE.Where(i => loteIds.Contains(i.Id)).Select(t => new baseLote
+            {
+                Id = t.Id,
+                Type = "MultiPolygon",
+                Coordinates = t.Coordinates
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+        public async Task<IDictionary<string, baseLote>> GetSomeProps_bLotesByIdAsync(IEnumerable<string> loteIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_LOTE.Where(i => loteIds.Contains(i.Id)).Select(t => new baseLote
+            {
+                Id = t.Id,
+                Nombre = t.Nombre
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+        public async Task<IDictionary<string, baseCalle>> GetSomeGeom_bCallesByIdAsync(IEnumerable<string> calleIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_CALLE.Where(i => calleIds.Contains(i.Id)).Select(t => new baseCalle
+            {
+                Id = t.Id,
+                Type = "Point",
+                Coordinates = t.Coordinates
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+        public async Task<IDictionary<string, baseCalle>> GetSomeProps_bCallesByIdAsync(IEnumerable<string> calleIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_CALLE.Where(i => calleIds.Contains(i.Id)).Select(t => new baseCalle
+            {
+                Id = t.Id,
+                Nombre = t.Nombre
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+        public async Task<IDictionary<string, baseManzana>> GetSomeGeom_bManzanasByIdAsync(IEnumerable<string> manzanaIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_MANZANA.Where(i => manzanaIds.Contains(i.Id)).Select(t => new baseManzana
+            {
+                Id = t.Id,
+                Type = "MultiPolygon",
+                Coordinates = t.Coordinates
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+        public async Task<IDictionary<string, baseManzana>> GetSomeProps_bManzanasByIdAsync(IEnumerable<string> manzanaIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_MANZANA.Where(i => manzanaIds.Contains(i.Id)).Select(t => new baseManzana
+            {
+                Id = t.Id,
+                Nombre = t.Nombre
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+        public async Task<IDictionary<string, basePueblo>> GetSomeGeom_bPueblosByIdAsync(IEnumerable<string> puebloIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_PUEBLO.Where(i => puebloIds.Contains(i.Id)).Select(t => new basePueblo
+            {
+                Id = t.Id,
+                Type = "MultiPolygon",
+                Coordinates = t.Coordinates//,
+                //Coords = Newtonsoft.Json.JsonConvert.DeserializeObject<float[][]>("[[-76.967172, -11.94294],[-76.967172, -11.94294]]")
+                //Coords = Newtonsoft.Json.JsonConvert.DeserializeObject<List<List<float>>>("[[-76.967172, -11.94294],[-76.967172, -11.94294]]")
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<string, basePueblo>> GetSomeProps_bPueblosByIdAsync(IEnumerable<string> puebloIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_PUEBLO.Where(i => puebloIds.Contains(i.Id)).Select(t => new basePueblo
+            {
+                Id = t.Id,
+                Nombre = t.Nombre/*,
+                Ubigeo = t.Ubigeo,
+                CodPueblo = t.CodPueblo,
+                NroPlano = t.NroPlano,
+                Fecha = Convert.ToString(t.Fecha),
+                Fuente = t.Fuente*/
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
 
         //Retrieving batch type collection AS LIST(inside array) by id
@@ -208,14 +348,60 @@ namespace Data.Repositories
             return await result;
         }
 
-        public Task<List<Formalizacion>> GetPuebloExistenteByUbigeo(string codpueblo)
+        //Coordenadas de ubicación de pueblo en formalización
+        public Task<List<PuebloUbicacion>> GetPuebloExistenteByUbigeo(string codpueblo)
         {
-            return _dbContext.SFI_PUEBLOEXISTENTE.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.Id.ToString(), codpueblo + "%")).ToListAsync();
+            //return _dbContext.SFI_PUEBLOEXISTENTE.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.Id.ToString(), codpueblo + "%")).ToListAsync();
+            return _dbContext.SFI_PUEBLO_UBICACION.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => t.Id.ToString() == codpueblo).ToListAsync();
         }
-        public Task<List<Centroide>> GetCentroidesByUbigeo(string centroide)
+        public Task<List<baseCentroide>> GetDistritoCentroideComo(string nombre)
         {
             //return _secContext.SFI_CENTROIDE.Where(t => t.Id == id).ToListAsync();
-            return _secContext.SFI_CENTROIDE.Where(t => EF.Functions.Like(t.Distrito.ToUpper(), centroide.ToUpper() + "%")).ToListAsync();
+            //return _secContext.SFI_CENTROIDE.Where(t => EF.Functions.Like(t.Distrito.ToUpper(), centroide.ToUpper() + "%")).ToListAsync();
+            //return _secContext.SFI_CENTROIDE.Where(t => EF.Functions.Like(t.Distrito.ToUpper(), centroide.ToUpper() + "%")).Where(u => !u.Id.EndsWith("00")).ToListAsync();
+            return _secContext.SFI_CENTROIDE.Where(t => EF.Functions.Like(t.Distrito.ToUpper(), nombre.ToUpper() + "%")).Where(u => !u.Id.EndsWith("00")).Take(10).ToListAsync();
+        }
+        public Task<List<baseCentroide>> GetProvinciaCentroideComo(string nombre)
+        {
+            return _secContext.SFI_CENTROIDE.Where(t => EF.Functions.Like(t.Provincia.ToUpper(), nombre.ToUpper() + "%")).Where(u => u.Id.EndsWith("00")).Take(10).ToListAsync();
+        }
+        public Task<List<baseCentroide>> GetRegionCentroideComo(string nombre)
+        {
+            return _secContext.SFI_CENTROIDE.Where(t => EF.Functions.Like(t.Region.ToUpper(), nombre.ToUpper() + "%")).Where(u => u.Id.EndsWith("0000")).Take(10).ToListAsync();
+        }
+
+        public async Task<baseDistrito> GetBaseDistritoPor(string ubigeo)
+        {
+            var result = _dbContext.BMAP_DISTRITO.Where(t => t.Id == ubigeo)
+                .Select(t => new baseDistrito
+                {
+                    Type = "MultiPolygon",
+                    Coordinates = t.Coordinates,
+                }).SingleOrDefaultAsync();
+            return await result;
+        }
+        
+        public async Task<baseProvincia> GetBaseProvinciaPor(string ubigeo)
+        {
+            var result = _dbContext.BMAP_PROVINCIA.Where(t => t.Id == ubigeo)
+                .Select(t => new baseProvincia
+                {
+                    Type = "MultiPolygon",
+                    Coordinates = t.Coordinates,
+                }).SingleOrDefaultAsync();
+            return await result;
+        }
+
+        public async Task<baseRegion> GetBaseRegionPor(string ubigeo)
+        {
+            var result = _dbContext.BMAP_DEPARTAMENTO.Where(t => t.Id == ubigeo)
+                .Select(t => new baseRegion
+                {
+                    Type = "MultiPolygon",
+                    Id = t.Id,
+                    Coordinates = t.Coordinates,
+                }).SingleOrDefaultAsync();
+            return await result;
         }
     }
 }

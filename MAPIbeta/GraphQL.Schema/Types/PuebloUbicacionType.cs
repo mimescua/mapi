@@ -6,9 +6,9 @@ using System.Text;
 
 namespace GraphQL.Schema.Types
 {
-    public class FormalizacionType : ObjectGraphType<Formalizacion>
+    public class PuebloUbicacionType : ObjectGraphType<PuebloUbicacion>
     {
-        public FormalizacionType()
+        public PuebloUbicacionType()
         {
             Name = "puebloExistente";
             Field(x => x.Id).Description("Identificador de pueblo existente");

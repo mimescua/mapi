@@ -44,6 +44,7 @@ namespace GraphQL.Client
             services.AddScoped<mapiMutation>();
 
             services.AddScoped<FeaturesType>();
+            services.AddScoped<FormalizadosType>();//Xd//
             services.AddScoped<CalleGeometryType>();
             services.AddScoped<CallePropertyType>();
             services.AddScoped<LoteGeometryType>();
@@ -55,7 +56,20 @@ namespace GraphQL.Client
             services.AddScoped<UnidadTGeometryType>();
             services.AddScoped<UnidadTPropertyType>();
 
-            services.AddScoped<FormalizacionType>();
+            services.AddScoped<baseCalleGeometryType>();//Xd//
+            services.AddScoped<baseCallePropertyType>();//Xd//
+            services.AddScoped<baseLoteGeometryType>();//Xd//
+            services.AddScoped<baseLotePropertyType>();//Xd//
+            services.AddScoped<baseManzanaGeometryType>();//Xd//
+            services.AddScoped<baseManzanaPropertyType>();//Xd//
+            services.AddScoped<basePuebloGeometryType>();//Xd//
+            services.AddScoped<basePuebloPropertyType>();//Xd//
+
+            services.AddScoped<baseDistritoGeometryType>();
+            services.AddScoped<baseProvinciaGeometryType>();
+            services.AddScoped<baseRegionGeometryType>();
+
+            services.AddScoped<PuebloUbicacionType>();
 
             services.AddScoped<UnidadTInputType>();
             services.AddScoped<UnidadTType>();

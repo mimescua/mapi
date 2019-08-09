@@ -7,7 +7,7 @@ using System.Text;
 namespace Data.Entities
 {
     [Table("SFI_UBIGEO")]
-    public class Centroide
+    public class baseCentroide
     {
         [Column("UBI_GEO")][Key]
         public string Id { get; set; }

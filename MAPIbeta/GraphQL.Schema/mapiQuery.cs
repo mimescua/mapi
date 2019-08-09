@@ -19,18 +19,32 @@ namespace GraphQL.Schema
                 "features",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tipo" },
-                    new QueryArgument<StringGraphType> { Name = "nombre" },
-                    new QueryArgument<StringGraphType> { Name = "ubigeo" }
+                    new QueryArgument<ListGraphType<FloatGraphType>> { Name = "extent" },
+                    new QueryArgument<StringGraphType> { Name = "plano" }
                 ),
                 resolve: context =>
                 {
                     var tipo = context.GetArgument<string>("tipo");
-                    var nombre = context.GetArgument<string>("nombre");
-                    var ubigeo = context.GetArgument<string>("ubigeo");
-                    return readRepository.GetFeaturesBy(tipo,nombre,ubigeo);
+                    var extent = context.GetArgument<List<double>>("extent");
+                    var plano = context.GetArgument<string>("plano");
+                    return readRepository.GetFeaturesBy(tipo, extent, plano);
                 }
             );
-            Field<ListGraphType<FormalizacionType>>(
+            Field<ListGraphType<FormalizadosType>>(
+                "bFeatures",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tipo" },
+                    new QueryArgument<ListGraphType<FloatGraphType>> { Name = "extent" }
+                ),
+                resolve: context =>
+                {
+                    var tipo = context.GetArgument<string>("tipo");
+                    var extent = context.GetArgument<double[]>("extent");
+                    return readRepository.GetFormalizadosBy(tipo, extent);
+                }
+            );
+
+            Field<ListGraphType<PuebloUbicacionType>>(
                 "puebloexistente",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "codpueblo" }
@@ -42,14 +56,69 @@ namespace GraphQL.Schema
                 }
             );
             Field<ListGraphType<CentroideType>>(
-                "centroide",
+                "distrito",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "centroide" }
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "nombre" }
                 ),
                 resolve: context =>
                 {
-                    var centroide = context.GetArgument<string>("centroide");
-                    return readRepository.GetCentroidesByUbigeo(centroide);
+                    var nombre = context.GetArgument<string>("nombre");
+                    return readRepository.GetDistritoCentroideComo(nombre);
+                }
+            );
+            Field<ListGraphType<CentroideType>>(
+                "provincia",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "nombre" }
+                ),
+                resolve: context =>
+                {
+                    var nombre = context.GetArgument<string>("nombre");
+                    return readRepository.GetProvinciaCentroideComo(nombre);
+                }
+            );
+            Field<ListGraphType<CentroideType>>(
+                "region",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "nombre" }
+                ),
+                resolve: context =>
+                {
+                    var nombre = context.GetArgument<string>("nombre");
+                    return readRepository.GetRegionCentroideComo(nombre);
+                }
+            );
+            Field<baseDistritoGeometryType>(
+                "basedistrito",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "ubigeo" }
+                ),
+                resolve: context =>
+                {
+                    var ubigeo = context.GetArgument<string>("ubigeo");
+                    return readRepository.GetBaseDistritoPor(ubigeo);
+                }
+            );
+            Field<baseProvinciaGeometryType>(
+                "baseprovincia",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "ubigeo" }
+                ),
+                resolve: context =>
+                {
+                    var ubigeo = context.GetArgument<string>("ubigeo");
+                    return readRepository.GetBaseProvinciaPor(ubigeo);
+                }
+            );
+            Field<baseRegionGeometryType>(
+                "baseregion",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "ubigeo" }
+                ),
+                resolve: context =>
+                {
+                    var ubigeo = context.GetArgument<string>("ubigeo");
+                    return readRepository.GetBaseRegionPor(ubigeo);
                 }
             );
         }

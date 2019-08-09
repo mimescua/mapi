@@ -6,12 +6,12 @@ using System.Text;
 
 namespace GraphQL.Schema.Types
 {
-    public class CentroideType : ObjectGraphType<Centroide>
+    public class CentroideType : ObjectGraphType<baseCentroide>
     {
         public CentroideType()
         {
             Name = "centroide";
-            Field(x => x.Id).Description("Identificador del centroide");
+            Field(x => x.Id).Description("Ubigeo - Identificador del centroide");
             Field(x => x.Longitud).Description("Longitud del centroide");
             Field(x => x.Latitud).Description("Latitud del centroide");
             Field(x => x.Distrito).Description("Distrito donde se ubica el centroide");

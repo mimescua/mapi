@@ -6,8 +6,9 @@ using System.Text;
 
 namespace Data.Entities
 {
+    //Coordenadas de ubicación de pueblo en formalización
     [Table("SFI_PUEBLO")]
-    public class Formalizacion
+    public class PuebloUbicacion
     {
         [Column("PUE_CODPUEBLO")][Key]
         public int Id { get; set; }

@@ -26,12 +26,12 @@ namespace GraphQL.Schema.Types
             });
             Field<CalleGeometryType, Calle>().Name("calleGeometry").ResolveAsync(context =>
             {
-                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Calle>("calleGeometryPorId", readRepository.GetSomeCallessByIdAsync);
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Calle>("calleGeometryPorId", readRepository.GetSomeCallesByIdAsync);
                 return loader.LoadAsync(context.Source.Id);
             });
             Field<CallePropertyType, Calle>().Name("calleProperties").ResolveAsync(context =>
             {
-                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Calle>("callePropertiesPorId", readRepository.GetSomeCallessByIdAsync);
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<int, Calle>("callePropertiesPorId", readRepository.GetSomeCallesByIdAsync);
                 return loader.LoadAsync(context.Source.Id);
             });
             Field<ManzanaGeometryType, Manzana>().Name("manzanaGeometry").ResolveAsync(context =>
