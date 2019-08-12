@@ -9,6 +9,13 @@ namespace Data.Repositories
 {
     public class OracleDbContext : DbContext
     {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<baseLote>().Property(x => x.Id).IsUnicode(false);
+            modelBuilder.Entity<basePueblo>().Property(x => x.Id).IsUnicode(false);
+            modelBuilder.Entity<baseCalle>().Property(x => x.Id).IsUnicode(false);
+            modelBuilder.Entity<baseManzana>().Property(x => x.Id).IsUnicode(false);
+        }
         public OracleDbContext(DbContextOptions<OracleDbContext> options) : base(options)
         {
             Database.EnsureCreated();

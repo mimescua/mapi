@@ -16,12 +16,12 @@ namespace GraphQL.Schema.Types
             Field(t => t.Type).Description("Feature type");
             Field<baseLotePropertyType, baseLote>().Name("bLoteProperties").ResolveAsync(context =>
             {
-                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<string, baseLote>("bLotePropertiesPorId", readRepository.GetSomeGeom_bLotesByIdAsync);
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<string, baseLote>("bLotePropertiesPorId", readRepository.GetSomeProps_bLotesByIdAsync);
                 return loader.LoadAsync(context.Source.Id.ToString());
             });
             Field<baseLoteGeometryType, baseLote>().Name("bLoteGeometry").ResolveAsync(context =>
             {
-                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<string, baseLote>("bLoteGeometryPorId", readRepository.GetSomeProps_bLotesByIdAsync);
+                var loader = dataLoaderAccessor.Context.GetOrAddBatchLoader<string, baseLote>("bLoteGeometryPorId", readRepository.GetSomeGeom_bLotesByIdAsync);
                 return loader.LoadAsync(context.Source.Id.ToString());
             });
             Field<baseCalleGeometryType, baseCalle>().Name("bCalleGeometry").ResolveAsync(context =>

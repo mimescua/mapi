@@ -167,7 +167,6 @@ namespace Data.Repositories
                 Coordinates = t.Coordinates
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
-
         public async Task<IDictionary<string, baseLote>> GetSomeProps_bLotesByIdAsync(IEnumerable<string> loteIds, CancellationToken token)
         {
             return await _dbContext.BMAP_LOTE.Where(i => loteIds.Contains(i.Id)).Select(t => new baseLote
@@ -186,7 +185,6 @@ namespace Data.Repositories
                 Coordinates = t.Coordinates
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
-
         public async Task<IDictionary<string, baseCalle>> GetSomeProps_bCallesByIdAsync(IEnumerable<string> calleIds, CancellationToken token)
         {
             return await _dbContext.BMAP_CALLE.Where(i => calleIds.Contains(i.Id)).Select(t => new baseCalle
@@ -205,7 +203,6 @@ namespace Data.Repositories
                 Coordinates = t.Coordinates
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
-
         public async Task<IDictionary<string, baseManzana>> GetSomeProps_bManzanasByIdAsync(IEnumerable<string> manzanaIds, CancellationToken token)
         {
             return await _dbContext.BMAP_MANZANA.Where(i => manzanaIds.Contains(i.Id)).Select(t => new baseManzana
