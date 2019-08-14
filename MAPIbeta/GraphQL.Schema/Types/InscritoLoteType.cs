@@ -6,20 +6,20 @@ using System.Text;
 
 namespace GraphQL.Schema.Types
 {
-    public class baseLoteGeometryType : ObjectGraphType<baseLote>
+    public class InscritoLoteGeometryType : ObjectGraphType<InscritoLote>
     {
-        public baseLoteGeometryType()
+        public InscritoLoteGeometryType()
         {
             Name = "geometry";
             Field(x => x.Type).Description("Tipo de geometría del lote");
             Field(x => x.Coordinates).Description("Geometría del lote");
         }
     }
-    public class baseLotePropertyType : ObjectGraphType<baseLote>
+    public class InscritoLotePropertyType : ObjectGraphType<InscritoLote>
     {
-        public baseLotePropertyType()
+        public InscritoLotePropertyType()
         {
-            Name = "bLoteProperties";
+            Name = "Lote_Inscrito_Properties";
             Field(x => x.Id).Description("Ubigeo del lote");
             Field(x => x.Nombre).Description("Nombre del lote");
             Field(x => x.Ubigeo).Description("Ubigeo del lote");

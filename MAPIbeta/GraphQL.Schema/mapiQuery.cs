@@ -27,11 +27,11 @@ namespace GraphQL.Schema
                     var tipo = context.GetArgument<string>("tipo");
                     var extent = context.GetArgument<List<double>>("extent");
                     var plano = context.GetArgument<string>("plano");
-                    return readRepository.GetFeaturesBy(tipo, extent, plano);
+                    return readRepository.GetFormalizacion(tipo, extent, plano);
                 }
             );
-            Field<ListGraphType<FormalizadosType>>(
-                "bFeatures",
+            Field<ListGraphType<FeaturesInscritosType>>(
+                "featuresPSAD56",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tipo" },
                     new QueryArgument<ListGraphType<FloatGraphType>> { Name = "extent" }
@@ -40,7 +40,33 @@ namespace GraphQL.Schema
                 {
                     var tipo = context.GetArgument<string>("tipo");
                     var extent = context.GetArgument<double[]>("extent");
-                    return readRepository.GetFormalizadosBy(tipo, extent);
+                    return readRepository.GetInscritosPSAD56(tipo, extent);
+                }
+            );
+            Field<ListGraphType<FeaturesInscritosType>>(
+                "featuresWGS84",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tipo" },
+                    new QueryArgument<ListGraphType<FloatGraphType>> { Name = "extent" }
+                ),
+                resolve: context =>
+                {
+                    var tipo = context.GetArgument<string>("tipo");
+                    var extent = context.GetArgument<double[]>("extent");
+                    return readRepository.GetInscritosWGS84(tipo, extent);
+                }
+            );
+            Field<ListGraphType<FeaturesMatrizType>>(
+                "featuresMatriz",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tipo" },
+                    new QueryArgument<ListGraphType<FloatGraphType>> { Name = "extent" }
+                ),
+                resolve: context =>
+                {
+                    var tipo = context.GetArgument<string>("tipo");
+                    var extent = context.GetArgument<double[]>("extent");
+                    return readRepository.GetMatrices(tipo, extent);
                 }
             );
 

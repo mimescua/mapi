@@ -6,25 +6,22 @@ using System.Text;
 
 namespace Data.Entities
 {
-    [Table("BMAP_MANZANA")]
-    public class baseManzana
+    [Table("BMAP_CALLE")]
+    public class InscritoCalle
     {
         [Column("OID")][Key]
         public string Id { get; set; }
 
-        //public List<Calle> Calles { get; set; }
-        public List<baseLote> Lotes { get; set; }
-
         [Column("ID_PUEBLO")]
         public string CodPueblo { get; set; }
-        public basePueblo Pueblo { get; set; }
+        public InscritoPueblo Pueblo { get; set; }
 
         [NotMapped]
         public string Type { get; set; }
         [Column("COORDINATES")]
         public string Coordinates { get; set; }
 
-        [Column("NRO_MZNA")]
+        [Column("NOM_CALLE")]
         public string Nombre { get; set; }
         [Column("ID_DIST")]
         public string Ubigeo { get; set; }

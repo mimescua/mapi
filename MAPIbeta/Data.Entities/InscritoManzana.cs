@@ -6,32 +6,29 @@ using System.Text;
 
 namespace Data.Entities
 {
-    [Table("BMAP_PUEBLO")]
-    public class basePueblo
+    [Table("BMAP_MANZANA")]
+    public class InscritoManzana
     {
         [Column("OID")][Key]
         public string Id { get; set; }
 
-        public List<baseCalle> Calles { get; set; }
-        public List<baseLote> Lotes { get; set; }
-        public List<baseManzana> Manzanas { get; set; }
+        //public List<Calle> Calles { get; set; }
+        public List<InscritoLote> Lotes { get; set; }
+
+        [Column("ID_PUEBLO")]
+        public string CodPueblo { get; set; }
+        public InscritoPueblo Pueblo { get; set; }
 
         [NotMapped]
         public string Type { get; set; }
         [Column("COORDINATES")]
         public string Coordinates { get; set; }
 
-        [NotMapped]
-        public float[][] Coords { get; set; }
-        //public List<List<float>> Coords { get; set; }
-
-        [Column("NOM_PUEBLO")]
+        [Column("NRO_MZNA")]
         public string Nombre { get; set; }
         [Column("ID_DIST")]
         public string Ubigeo { get; set; }
 
-        [Column("ID_PUEBLO")]
-        public string CodPueblo { get; set; }
         [Column("ID_PLANO")]
         public string NroPlano { get; set; }
         [Column("FECH_TRAN")]

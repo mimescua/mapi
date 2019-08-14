@@ -11,10 +11,12 @@ namespace Data.Repositories
     {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<baseLote>().Property(x => x.Id).IsUnicode(false);
-            modelBuilder.Entity<basePueblo>().Property(x => x.Id).IsUnicode(false);
-            modelBuilder.Entity<baseCalle>().Property(x => x.Id).IsUnicode(false);
-            modelBuilder.Entity<baseManzana>().Property(x => x.Id).IsUnicode(false);
+            modelBuilder.Entity<InscritoLote>().Property(x => x.Id).IsUnicode(false);
+            modelBuilder.Entity<InscritoPueblo>().Property(x => x.Id).IsUnicode(false);
+            modelBuilder.Entity<InscritoCalle>().Property(x => x.Id).IsUnicode(false);
+            modelBuilder.Entity<InscritoManzana>().Property(x => x.Id).IsUnicode(false);
+
+            modelBuilder.Entity<MatrizPueblo>().Property(x => x.Id).IsUnicode(false);
         }
         public OracleDbContext(DbContextOptions<OracleDbContext> options) : base(options)
         {
@@ -27,10 +29,12 @@ namespace Data.Repositories
         public DbSet<UnidadT> SFI_GEOUNIDADT { get; set; }
         public DbSet<PuebloUbicacion> SFI_PUEBLO_UBICACION { get; set; }
 
-        public DbSet<baseLote> BMAP_LOTE { get; set; }
-        public DbSet<baseCalle> BMAP_CALLE { get; set; }
-        public DbSet<baseManzana> BMAP_MANZANA { get; set; }
-        public DbSet<basePueblo> BMAP_PUEBLO { get; set; }
+        public DbSet<InscritoLote> BMAP_LOTE { get; set; }
+        public DbSet<InscritoCalle> BMAP_CALLE { get; set; }
+        public DbSet<InscritoManzana> BMAP_MANZANA { get; set; }
+        public DbSet<InscritoPueblo> BMAP_PUEBLO { get; set; }
+
+        public DbSet<MatrizPueblo> BMAP_MATRIZ { get; set; }
 
         public DbSet<baseDistrito> BMAP_DISTRITO { get; set; }
         public DbSet<baseProvincia> BMAP_PROVINCIA { get; set; }

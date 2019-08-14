@@ -44,7 +44,9 @@ namespace GraphQL.Client
             services.AddScoped<mapiMutation>();
 
             services.AddScoped<FeaturesType>();
-            services.AddScoped<FormalizadosType>();//Xd//
+            services.AddScoped<FeaturesInscritosType>();
+            services.AddScoped<FeaturesMatrizType>();
+
             services.AddScoped<CalleGeometryType>();
             services.AddScoped<CallePropertyType>();
             services.AddScoped<LoteGeometryType>();
@@ -56,14 +58,17 @@ namespace GraphQL.Client
             services.AddScoped<UnidadTGeometryType>();
             services.AddScoped<UnidadTPropertyType>();
 
-            services.AddScoped<baseCalleGeometryType>();//Xd//
-            services.AddScoped<baseCallePropertyType>();//Xd//
-            services.AddScoped<baseLoteGeometryType>();//Xd//
-            services.AddScoped<baseLotePropertyType>();//Xd//
-            services.AddScoped<baseManzanaGeometryType>();//Xd//
-            services.AddScoped<baseManzanaPropertyType>();//Xd//
-            services.AddScoped<basePuebloGeometryType>();//Xd//
-            services.AddScoped<basePuebloPropertyType>();//Xd//
+            services.AddScoped<InscritoCalleGeometryType>();
+            services.AddScoped<InscritoCallePropertyType>();
+            services.AddScoped<InscritoLoteGeometryType>();
+            services.AddScoped<InscritoLotePropertyType>();
+            services.AddScoped<InscritoManzanaGeometryType>();
+            services.AddScoped<InscritoManzanaPropertyType>();
+            services.AddScoped<InscritoPuebloGeometryType>();
+            services.AddScoped<InscritoPuebloPropertyType>();
+
+            services.AddScoped<MatrizPuebloGeometryType>();
+            services.AddScoped<MatrizPuebloPropertyType>();
 
             services.AddScoped<baseDistritoGeometryType>();
             services.AddScoped<baseProvinciaGeometryType>();

@@ -6,23 +6,23 @@ using System.Text;
 
 namespace GraphQL.Schema.Types
 {
-    public class basePuebloGeometryType : ObjectGraphType<basePueblo>
+    public class InscritoPuebloGeometryType : ObjectGraphType<InscritoPueblo>
     {
-        public basePuebloGeometryType()
+        public InscritoPuebloGeometryType()
         {
-            Name = "geometryxd";
+            Name = "geometry";
             Field(x => x.Type).Description("Tipo de geometría del pueblo");
             Field(x => x.Coordinates).Description("Geometría del pueblo");
-            Field(x => x.Coords).Description("Geometría del pueblo");
+            //Field(x => x.Coords).Description("Geometría del pueblo");
 
             //Field<ListGraphType<ListGraphType<DecimalGraphType>>>().Name("coordinates").ResolveAsync(async context => context.Source.Coords);
         }
     }
-    public class basePuebloPropertyType : ObjectGraphType<basePueblo>
+    public class InscritoPuebloPropertyType : ObjectGraphType<InscritoPueblo>
     {
-        public basePuebloPropertyType()
+        public InscritoPuebloPropertyType()
         {
-            Name = "bPuebloProperties";
+            Name = "Pueblo_Inscrito_Properties";
             Field(x => x.Id).Description("Ubigeo del pueblo");
             Field(x => x.Nombre).Description("Nombre del pueblo");
             Field(x => x.Ubigeo).Description("Ubigeo del pueblo");

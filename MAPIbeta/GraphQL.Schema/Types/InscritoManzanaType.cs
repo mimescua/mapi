@@ -6,20 +6,20 @@ using System.Text;
 
 namespace GraphQL.Schema.Types
 {
-    public class baseManzanaGeometryType : ObjectGraphType<baseManzana>
+    public class InscritoManzanaGeometryType : ObjectGraphType<InscritoManzana>
     {
-        public baseManzanaGeometryType()
+        public InscritoManzanaGeometryType()
         {
             Name = "geometry";
             Field(x => x.Type).Description("Tipo de geometría de la manzana");
             Field(x => x.Coordinates).Description("Geometría de la manzana");
         }
     }
-    public class baseManzanaPropertyType : ObjectGraphType<baseManzana>
+    public class InscritoManzanaPropertyType : ObjectGraphType<InscritoManzana>
     {
-        public baseManzanaPropertyType()
+        public InscritoManzanaPropertyType()
         {
-            Name = "bManzanaProperties";
+            Name = "Manzana_Inscrito_Properties";
             Field(x => x.Id).Description("Ubigeo de la manzana");
             Field(x => x.Nombre).Description("Nombre de la manzana");
             Field(x => x.Ubigeo).Description("Ubigeo de la manzana");

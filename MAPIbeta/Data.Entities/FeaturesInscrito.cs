@@ -7,7 +7,7 @@ using System.Text;
 namespace Data.Entities
 {
     [NotMapped]
-    public class Formalizados
+    public class FeaturesInscrito
     {
         [NotMapped]
         public string Id { get; set; }
