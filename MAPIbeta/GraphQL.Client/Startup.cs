@@ -46,6 +46,7 @@ namespace GraphQL.Client
             services.AddScoped<FeaturesType>();
             services.AddScoped<FeaturesInscritosType>();
             services.AddScoped<FeaturesMatrizType>();
+            services.AddScoped<FeaturesTematicoType>();
 
             services.AddScoped<CalleGeometryType>();
             services.AddScoped<CallePropertyType>();
@@ -69,6 +70,11 @@ namespace GraphQL.Client
 
             services.AddScoped<MatrizPuebloGeometryType>();
             services.AddScoped<MatrizPuebloPropertyType>();
+
+            services.AddScoped<CentroidePuebloGeometryType>();
+            services.AddScoped<CentroidePuebloPropertyType>();
+            services.AddScoped<CentroideInscritoPuebloGeometryType>();
+            services.AddScoped<CentroideInscritoPuebloPropertyType>();
 
             services.AddScoped<baseDistritoGeometryType>();
             services.AddScoped<baseProvinciaGeometryType>();

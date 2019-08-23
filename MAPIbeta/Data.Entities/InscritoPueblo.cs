@@ -20,6 +20,8 @@ namespace Data.Entities
         public string Type { get; set; }
         [Column("COORDINATES")]
         public string Coordinates { get; set; }
+        [Column("CENTROID")]
+        public string Centroide { get; set; }/////
 
         [NotMapped]
         public float[][] Coords { get; set; }

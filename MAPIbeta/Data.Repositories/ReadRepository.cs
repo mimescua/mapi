@@ -210,14 +210,57 @@ namespace Data.Repositories
             return result.ToList();
         }
 
+        public async Task<List<FeaturesTematico>> GetTematico(string tipo, string anio, double[] extent)
+        {
+            var ids = new string[] { };
+
+            switch (tipo.ToLower())
+            {
+                case "inscrito":
+                    {
+                        ids = _dbContext.BMAP_MATRIZ.FromSql($"Select t.OID from BMAP_PUEBLO t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE' and extract(YEAR from FECH_TRAN) = {anio}").Select(X => X.Id).Take(1000).ToArray();
+                    }; break;
+                case "formalizacion":
+                    {
+                        ids = _dbContext.BMAP_MATRIZ.FromSql($"Select t.OID from BMAP_PUEBLO t where MDSYS.SDO_RELATE(t.GEOMLL, MDSYS.SDO_GEOMETRY(2003, 4326, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 3), SDO_ORDINATE_ARRAY({extent[0]}, {extent[1]}, {extent[2]}, {extent[3]})), 'mask = anyinteract') = 'TRUE' and extract(YEAR from FECH_TRAN) = {anio}").Select(X => X.Id).Take(1000).ToArray();
+                    }; break;
+                default: ids = new string[] { "1" }; break;
+            }
+            var result = new List<FeaturesTematico>(ids.Length);
+            for (int i = 0; i < ids.Length; i++)
+            {
+                result.Add(new FeaturesTematico { Id = ids[i], Type = "Feature" });
+            }
+
+            return result.ToList();
+        }
+
         //Retrieving batch type collection AS LIST TYPE by id
         public async Task<IDictionary<int, Lote>> GetSomeLotesByIdAsync(IEnumerable<int> loteIds, CancellationToken token)
         {
             return await _dbContext.SFI_GEOLOTE.Where(i => loteIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
-        public async Task<IDictionary<int, Calle>> GetSomeCallesByIdAsync(IEnumerable<int> calleIds, CancellationToken token)
+        //public async Task<IDictionary<int, Calle>> GetSomeCallesByIdAsync(IEnumerable<int> calleIds, CancellationToken token)
+        //{
+        //    return await _dbContext.SFI_GEOCALLE.Where(i => calleIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        //}
+        public async Task<IDictionary<int, Calle>> GetGeomCallesByIdList(IEnumerable<int> calleIds, CancellationToken token)
         {
-            return await _dbContext.SFI_GEOCALLE.Where(i => calleIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+            return await _dbContext.SFI_GEOCALLE.Where(i => calleIds.Contains(i.Id)).Select(t => new Calle
+            {
+                Id = t.Id,
+                Type = t.Type,
+                Coordinates = t.Coordinates
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<int, Calle>> GetPropsCallesByIdList(IEnumerable<int> calleIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOCALLE.Where(i => calleIds.Contains(i.Id)).Select(t => new Calle
+            {
+                Id = t.Id,
+                Nombre = t.Nombre,
+                Ubigeo = t.Ubigeo
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<int, Manzana>> GetSomeManzanasByIdAsync(IEnumerable<int> manzanaIds, CancellationToken token)
         {
@@ -263,7 +306,12 @@ namespace Data.Repositories
             return await _dbContext.BMAP_LOTE.Where(i => loteIds.Contains(i.Id)).Select(t => new InscritoLote
             {
                 Id = t.Id,
-                Nombre = t.Nombre
+                Nombre = t.Nombre,
+                Ubigeo = t.Ubigeo,
+                CodPueblo = t.CodPueblo,
+                NroPlano = t.NroPlano,
+                Fecha = Convert.ToString(t.Fecha),
+                Fuente = t.Fuente
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
 
@@ -281,7 +329,12 @@ namespace Data.Repositories
             return await _dbContext.BMAP_CALLE.Where(i => calleIds.Contains(i.Id)).Select(t => new InscritoCalle
             {
                 Id = t.Id,
-                Nombre = t.Nombre
+                Nombre = t.Nombre,
+                Ubigeo = t.Ubigeo,
+                CodPueblo = t.CodPueblo,
+                NroPlano = t.NroPlano,
+                Fecha = Convert.ToString(t.Fecha),
+                Fuente = t.Fuente
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
 
@@ -299,7 +352,12 @@ namespace Data.Repositories
             return await _dbContext.BMAP_MANZANA.Where(i => manzanaIds.Contains(i.Id)).Select(t => new InscritoManzana
             {
                 Id = t.Id,
-                Nombre = t.Nombre
+                Nombre = t.Nombre,
+                Ubigeo = t.Ubigeo,
+                CodPueblo = t.CodPueblo,
+                NroPlano = t.NroPlano,
+                Fecha = Convert.ToString(t.Fecha),
+                Fuente = t.Fuente
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
 
@@ -319,12 +377,12 @@ namespace Data.Repositories
             return await _dbContext.BMAP_PUEBLO.Where(i => puebloIds.Contains(i.Id)).Select(t => new InscritoPueblo
             {
                 Id = t.Id,
-                Nombre = t.Nombre/*,
+                Nombre = t.Nombre,
                 Ubigeo = t.Ubigeo,
                 CodPueblo = t.CodPueblo,
                 NroPlano = t.NroPlano,
                 Fecha = Convert.ToString(t.Fecha),
-                Fuente = t.Fuente*/
+                Fuente = t.Fuente
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
 
@@ -341,6 +399,43 @@ namespace Data.Repositories
         public async Task<IDictionary<string, MatrizPueblo>> GetPropsPuebloMatrizByIdList(IEnumerable<string> matrizIds, CancellationToken token)
         {
             return await _dbContext.BMAP_MATRIZ.Where(i => matrizIds.Contains(i.Id)).Select(t => new MatrizPueblo
+            {
+                Id = t.Id,
+                Nombre = t.Nombre,
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+
+        //public async Task<IDictionary<string, CentroidePueblo>> GetGeomCenPueblosByIdList(IEnumerable<string> matrizIds, CancellationToken token)
+        //{
+        //    return await _dbContext.BMAP_PUEBLO_CENTROIDE.Where(i => matrizIds.Contains(i.Id)).Select(t => new CentroidePueblo
+        //    {
+        //        Id = t.Id,
+        //        Type = "Point",
+        //        Coordinates = t.Coordinates
+        //    }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        //}
+        //public async Task<IDictionary<string, CentroidePueblo>> GetPropsCenPueblosByIdList(IEnumerable<string> matrizIds, CancellationToken token)
+        //{
+        //    return await _dbContext.BMAP_PUEBLO_CENTROIDE.Where(i => matrizIds.Contains(i.Id)).Select(t => new CentroidePueblo
+        //    {
+        //        Id = Convert.ToInt32(t.Id),
+        //        Nombre = t.Nombre,
+        //    }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        //}
+
+        public async Task<IDictionary<string, InscritoPueblo>> GetGeomCenPueblosInscritoByIdList(IEnumerable<string> matrizIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_PUEBLO.Where(i => matrizIds.Contains(i.Id)).Select(t => new InscritoPueblo
+            {
+                Id = t.Id,
+                Type = "Point",
+                Centroide = t.Centroide
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<string, InscritoPueblo>> GetPropsCenPueblosInscritoByIdList(IEnumerable<string> matrizIds, CancellationToken token)
+        {
+            return await _dbContext.BMAP_PUEBLO.Where(i => matrizIds.Contains(i.Id)).Select(t => new InscritoPueblo
             {
                 Id = t.Id,
                 Nombre = t.Nombre,

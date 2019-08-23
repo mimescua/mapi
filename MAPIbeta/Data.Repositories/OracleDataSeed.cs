@@ -84,7 +84,6 @@ namespace Data.Repositories
                 {
                     Id = 1,
                     PuebloId = 1,//xtra
-                    ManzanaId = 1,//xtra
                     Type = "Point",
                     Coordinates = "[-77.12094426155089,-12.06418746491854]",
                     Nombre = "Calle 1",

@@ -16,9 +16,6 @@ namespace Data.Entities
         public int PuebloId { get; set; }
         public Pueblo Pueblo { get; set; }
 
-        [Column("MANZANAID")]
-        public int ManzanaId { get; set; }
-        public Manzana Manzana { get; set; }
         [Column("TYPE")]
         public string Type { get; set; }
         [Column("COORDINATES")]

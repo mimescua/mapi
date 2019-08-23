@@ -21,13 +21,13 @@ namespace GraphQL.Schema.Types
         {
             Name = "Lote_Inscrito_Properties";
             Field(x => x.Id).Description("Ubigeo del lote");
-            Field(x => x.Nombre).Description("Nombre del lote");
-            Field(x => x.Ubigeo).Description("Ubigeo del lote");
+            Field(x => x.Nombre, nullable: true).Description("Nombre del lote");
+            Field(x => x.Ubigeo, nullable: true).Description("Ubigeo del lote");
 
-            Field(x => x.CodPueblo).Description("código del lote");
-            Field(x => x.NroPlano).Description("Número de plano de procedencia");
-            Field(x => x.Fecha).Description("Fecha de registro");
-            Field(x => x.Fuente).Description("Origen del registro geométrico");
+            Field(x => x.CodPueblo, nullable: true).Description("código del lote");
+            Field(x => x.NroPlano, nullable: true).Description("Número de plano de procedencia");
+            Field(x => x.Fecha, nullable: true).Description("Fecha de registro");
+            Field(x => x.Fuente, nullable: true).Description("Origen del registro geométrico");
         }
     }
 }

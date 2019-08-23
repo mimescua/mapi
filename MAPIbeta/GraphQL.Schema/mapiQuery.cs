@@ -69,6 +69,21 @@ namespace GraphQL.Schema
                     return readRepository.GetMatrices(tipo, extent);
                 }
             );
+            Field<ListGraphType<FeaturesTematicoType>>(
+                "featuresTematico",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tipo" },
+                    new QueryArgument<StringGraphType> { Name = "anio" },
+                    new QueryArgument<ListGraphType<FloatGraphType>> { Name = "extent" }
+                ),
+                resolve: context =>
+                {
+                    var tipo = context.GetArgument<string>("tipo");
+                    var anio = context.GetArgument<string>("anio");
+                    var extent = context.GetArgument<double[]>("extent");
+                    return readRepository.GetTematico(tipo, anio, extent);
+                }
+            );
 
             Field<ListGraphType<PuebloUbicacionType>>(
                 "puebloexistente",

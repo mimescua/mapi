@@ -21,13 +21,13 @@ namespace GraphQL.Schema.Types
         {
             Name = "Manzana_Inscrito_Properties";
             Field(x => x.Id).Description("Ubigeo de la manzana");
-            Field(x => x.Nombre).Description("Nombre de la manzana");
-            Field(x => x.Ubigeo).Description("Ubigeo de la manzana");
+            Field(x => x.Nombre, nullable: true).Description("Nombre de la manzana");
+            Field(x => x.Ubigeo, nullable: true).Description("Ubigeo de la manzana");
 
-            Field(x => x.CodPueblo).Description("código de la manzana");
-            Field(x => x.NroPlano).Description("Número de plano de procedencia");
-            Field(x => x.Fecha).Description("Fecha de registro");
-            Field(x => x.Fuente).Description("Origen del registro geométrico");
+            Field(x => x.CodPueblo, nullable: true).Description("código de la manzana");
+            Field(x => x.NroPlano, nullable: true).Description("Número de plano de procedencia");
+            Field(x => x.Fecha, nullable: true).Description("Fecha de registro");
+            Field(x => x.Fuente, nullable: true).Description("Origen del registro geométrico");
         }
     }
 }
