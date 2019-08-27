@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Data.Entities
 {
-    [Table("SFI_GEOCALLE")]//[Table("CALLES")]
+    [Table("SFI_GEOCALLE")]
     public class Calle
     {
         [Column("CALLEID")][Key]
@@ -19,7 +19,9 @@ namespace Data.Entities
         [Column("TYPE")]
         public string Type { get; set; }
         [Column("COORDINATES")]
-        public string Coordinates { get; set; }
+        public string CoordinateString { get; set; }
+        [NotMapped]
+        public List<double?> Coordinates { get; set; }
 
         [Column("NOMBRE")]
         public string Nombre { get; set; }

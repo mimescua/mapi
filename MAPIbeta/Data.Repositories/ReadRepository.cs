@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
+using Newtonsoft.Json;
 
 namespace Data.Repositories
 {
@@ -235,22 +236,47 @@ namespace Data.Repositories
             return result.ToList();
         }
 
-        //Retrieving batch type collection AS LIST TYPE by id
-        public async Task<IDictionary<int, Lote>> GetSomeLotesByIdAsync(IEnumerable<int> loteIds, CancellationToken token)
-        {
-            return await _dbContext.SFI_GEOLOTE.Where(i => loteIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
-        }
-        //public async Task<IDictionary<int, Calle>> GetSomeCallesByIdAsync(IEnumerable<int> calleIds, CancellationToken token)
+        //Retrieving batch type collection AS LIST TYPE by id lists
+        //public async Task<IDictionary<int, Lote>> GetSomeLotesByIdAsync(IEnumerable<int> loteIds, CancellationToken token)
         //{
-        //    return await _dbContext.SFI_GEOCALLE.Where(i => calleIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        //    return await _dbContext.SFI_GEOLOTE.Where(i => loteIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         //}
+        public async Task<IDictionary<int, Lote>> GetGeomLotesByIdList(IEnumerable<int> loteIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOLOTE.Where(i => loteIds.Contains(i.Id)).Select(t => new Lote
+            {
+                Id = t.Id,
+                Type = t.Type,
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<int, Lote>> GetPropsLotesByIdList(IEnumerable<int> loteIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOLOTE.Where(i => loteIds.Contains(i.Id)).Select(t => new Lote
+            {
+                Id = t.Id,
+                Nombre = t.Nombre,
+                Ubigeo = t.Ubigeo,
+                Area = t.Area,
+                TipoUso = t.TipoUso,
+                MedidFrnt = t.MedidFrnt,
+                MedidIzq = t.MedidIzq,
+                MedidPost = t.MedidPost,
+                MedidDer = t.MedidDer,
+                ColinFrnt = t.ColinFrnt,
+                ColinIzq = t.ColinIzq,
+                ColinPost = t.ColinPost,
+                ColinDer = t.ColinDer,
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
         public async Task<IDictionary<int, Calle>> GetGeomCallesByIdList(IEnumerable<int> calleIds, CancellationToken token)
         {
             return await _dbContext.SFI_GEOCALLE.Where(i => calleIds.Contains(i.Id)).Select(t => new Calle
             {
                 Id = t.Id,
                 Type = t.Type,
-                Coordinates = t.Coordinates
+                Coordinates = JsonConvert.DeserializeObject<List<double?>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<int, Calle>> GetPropsCallesByIdList(IEnumerable<int> calleIds, CancellationToken token)
@@ -262,35 +288,71 @@ namespace Data.Repositories
                 Ubigeo = t.Ubigeo
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
-        public async Task<IDictionary<int, Manzana>> GetSomeManzanasByIdAsync(IEnumerable<int> manzanaIds, CancellationToken token)
+
+        public async Task<IDictionary<int, Manzana>> GetGeomManzanasByIdList(IEnumerable<int> manzanaIds, CancellationToken token)
         {
-            return await _dbContext.SFI_GEOMANZANA.Where(i => manzanaIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+            return await _dbContext.SFI_GEOMANZANA.Where(i => manzanaIds.Contains(i.Id)).Select(t => new Manzana
+            {
+                Id = t.Id,
+                Type = t.Type,
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
-        public async Task<IDictionary<int, Pueblo>> GetSomePueblosByIdAsync(IEnumerable<int> puebloIds, CancellationToken token)
+        public async Task<IDictionary<int, Manzana>> GetPropsManzanasByIdList(IEnumerable<int> manzanaIds, CancellationToken token)
         {
-            return await _dbContext.SFI_GEOPUEBLO.Where(i => puebloIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
-        }
-        public async Task<IDictionary<int, UnidadT>> GetSomeUnidaTsByIdAsync(IEnumerable<int> unidadtIds, CancellationToken token)
-        {
-            return await _dbContext.SFI_GEOUNIDADT.Where(i => unidadtIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+            return await _dbContext.SFI_GEOMANZANA.Where(i => manzanaIds.Contains(i.Id)).Select(t => new Manzana
+            {
+                Id = t.Id,
+                Nombre = t.Nombre,
+                Ubigeo = t.Ubigeo,
+                CantLotes = t.CantLotes,
+                Area = t.Area
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
 
-        //public async Task<IDictionary<string, baseLote>> GetSome_bLotesByIdAsync(IEnumerable<string> loteIds, CancellationToken token)
-        //{
-        //    return await _dbContext.BMAP_LOTE.Where(i => loteIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
-        //}
-        //public async Task<IDictionary<string, baseCalle>> GetSome_bCallesByIdAsync(IEnumerable<string> calleIds, CancellationToken token)
-        //{
-        //    return await _dbContext.BMAP_CALLE.Where(i => calleIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
-        //}
-        //public async Task<IDictionary<string, baseManzana>> GetSome_bManzanasByIdAsync(IEnumerable<string> manzanaIds, CancellationToken token)
-        //{
-        //    return await _dbContext.BMAP_MANZANA.Where(i => manzanaIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
-        //}
-        //public async Task<IDictionary<string, basePueblo>> GetSome_bPueblosByIdAsync(IEnumerable<string> puebloIds, CancellationToken token)
-        //{
-        //    return await _dbContext.BMAP_PUEBLO.Where(i => puebloIds.Contains(i.Id)).ToDictionaryAsync(x => x.Id, cancellationToken: token);
-        //}
+        public async Task<IDictionary<int, Pueblo>> GetGeomPueblosByIdList(IEnumerable<int> puebloIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOPUEBLO.Where(i => puebloIds.Contains(i.Id)).Select(t => new Pueblo
+            {
+                Id = t.Id,
+                Type = t.Type,
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<int, Pueblo>> GetPropsPueblosByIdList(IEnumerable<int> puebloIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOPUEBLO.Where(i => puebloIds.Contains(i.Id)).Select(t => new Pueblo
+            {
+                Id = t.Id,
+                Nombre = t.Nombre,
+                Ubigeo = t.Ubigeo,
+                NomParcela = t.NomParcela,
+                Area = t.Area,
+                AreaVivienda = t.AreaVivienda,
+                AreaComunal = t.AreaComunal,
+                AreaEducacion = t.AreaEducacion
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
+        public async Task<IDictionary<int, UnidadT>> GetGeomUnidadtByIdList(IEnumerable<int> unidadtIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOPUEBLO.Where(i => unidadtIds.Contains(i.Id)).Select(t => new UnidadT
+            {
+                Id = t.Id,
+                Type = t.Type,
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+        public async Task<IDictionary<int, UnidadT>> GetPropsUnidadtByIdList(IEnumerable<int> unidadtIds, CancellationToken token)
+        {
+            return await _dbContext.SFI_GEOPUEBLO.Where(i => unidadtIds.Contains(i.Id)).Select(t => new UnidadT
+            {
+                Id = t.Id,
+                Nombre = t.Nombre,
+                Ubigeo = t.Ubigeo
+            }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
+        }
+
 
         public async Task<IDictionary<string, InscritoLote>> GetGeomLotesInscritoByIdList(IEnumerable<string> loteIds, CancellationToken token)
         {
@@ -298,7 +360,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = "MultiPolygon",
-                Coordinates = t.Coordinates
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, InscritoLote>> GetPropsLotesInscritoByIdList(IEnumerable<string> loteIds, CancellationToken token)
@@ -321,7 +383,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = "Point",
-                Coordinates = t.Coordinates
+                Coordinates = JsonConvert.DeserializeObject<List<double?>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, InscritoCalle>> GetPropsCallesInscritoByIdList(IEnumerable<string> calleIds, CancellationToken token)
@@ -344,7 +406,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = "MultiPolygon",
-                Coordinates = t.Coordinates
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, InscritoManzana>> GetPropsManzanasInscritoByIdList(IEnumerable<string> manzanaIds, CancellationToken token)
@@ -363,13 +425,13 @@ namespace Data.Repositories
 
         public async Task<IDictionary<string, InscritoPueblo>> GetGeomPueblosInscritoByIdList(IEnumerable<string> puebloIds, CancellationToken token)
         {
+            //var f = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(a);
+            //var r = System.Text.Json.JsonSerializer.Deserialize<List<List<List<List<double?>>>>>(a);
             return await _dbContext.BMAP_PUEBLO.Where(i => puebloIds.Contains(i.Id)).Select(t => new InscritoPueblo
             {
                 Id = t.Id,
                 Type = "MultiPolygon",
-                Coordinates = t.Coordinates//,
-                //Coords = Newtonsoft.Json.JsonConvert.DeserializeObject<float[][]>("[[-76.967172, -11.94294],[-76.967172, -11.94294]]")
-                //Coords = Newtonsoft.Json.JsonConvert.DeserializeObject<List<List<float>>>("[[-76.967172, -11.94294],[-76.967172, -11.94294]]")
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, InscritoPueblo>> GetPropsPueblosInscritoByIdList(IEnumerable<string> puebloIds, CancellationToken token)
@@ -393,7 +455,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = "MultiPolygon",
-                Coordinates = t.Coordinates
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, MatrizPueblo>> GetPropsPuebloMatrizByIdList(IEnumerable<string> matrizIds, CancellationToken token)
@@ -578,7 +640,7 @@ namespace Data.Repositories
                 .Select(t => new baseDistrito
                 {
                     Type = "MultiPolygon",
-                    Coordinates = t.Coordinates,
+                    Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString),
                 }).SingleOrDefaultAsync();
             return await result;
         }
@@ -589,7 +651,7 @@ namespace Data.Repositories
                 .Select(t => new baseProvincia
                 {
                     Type = "MultiPolygon",
-                    Coordinates = t.Coordinates,
+                    Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString),
                 }).SingleOrDefaultAsync();
             return await result;
         }
@@ -601,7 +663,7 @@ namespace Data.Repositories
                 {
                     Type = "MultiPolygon",
                     Id = t.Id,
-                    Coordinates = t.Coordinates,
+                    Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString),
                 }).SingleOrDefaultAsync();
             return await result;
         }

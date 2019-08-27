@@ -19,13 +19,13 @@ namespace Data.Entities
         [NotMapped]
         public string Type { get; set; }
         [Column("COORDINATES")]
-        public string Coordinates { get; set; }
+        public string CoordinateString { get; set; }
         [Column("CENTROID")]
         public string Centroide { get; set; }/////
 
         [NotMapped]
-        public float[][] Coords { get; set; }
-        //public List<List<float>> Coords { get; set; }
+        public List<List<List<List<double?>>>> Coordinates { get; set; }
+        //public JArray Coords { get; set; }
 
         [Column("NOM_PUEBLO")]
         public string Nombre { get; set; }

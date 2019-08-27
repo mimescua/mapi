@@ -15,7 +15,9 @@ namespace Data.Entities
         [NotMapped]
         public string Type { get; set; }
         [Column("COORDINATES")]
-        public string Coordinates { get; set; }
+        public string CoordinateString { get; set; }
+        [NotMapped]
+        public List<List<List<List<double?>>>> Coordinates { get; set; }
 
         [Column("TEXT")]
         public string Nombre { get; set; }

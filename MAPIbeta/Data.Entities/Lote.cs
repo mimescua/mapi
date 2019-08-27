@@ -23,8 +23,9 @@ namespace Data.Entities
         [Column("TYPE")]
         public string Type { get; set; }
         [Column("COORDINATES")]
-        public string Coordinates { get; set; }
-        //public OracleLob Coordinates { get; set; }
+        public string CoordinateString { get; set; }
+        [NotMapped]
+        public List<List<List<List<double?>>>> Coordinates { get; set; }
 
         [Column("NOMBRE")]
         public string Nombre { get; set; }
@@ -36,7 +37,7 @@ namespace Data.Entities
         [Column("TIPOUSO")]
         public string TipoUso { get; set; }
         [Column("MEDIDFRNT")]
-        public string MedidFrnt { get; set; }//double to list?
+        public string MedidFrnt { get; set; }
         [Column("MEDIDIZQ")]
         public string MedidIzq { get; set; }
         [Column("MEDIDPOST")]

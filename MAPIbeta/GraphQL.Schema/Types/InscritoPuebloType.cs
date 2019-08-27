@@ -12,10 +12,18 @@ namespace GraphQL.Schema.Types
         {
             Name = "geometry";
             Field(x => x.Type).Description("Tipo de geometría del pueblo");
-            Field(x => x.Coordinates).Description("Geometría del pueblo");
-            //Field(x => x.Coords).Description("Geometría del pueblo");
+            Field<StringGraphType>("coordinates",
+              resolve: context => context.Source.Coordinates.ToArray());
 
-            //Field<ListGraphType<ListGraphType<DecimalGraphType>>>().Name("coordinates").ResolveAsync(async context => context.Source.Coords);
+//            Field<StringGraphType>("coordinates",
+//              resolve: context => ((InscritoPueblo)context.Source).Coordinates.ToArray());
+//            Field<ListGraphType<ListGraphType<FloatGraphType>>>()
+//                .Name("coors")
+//                .ResolveAsync(async context => context.Source.Coords);//
+
+//            Field(x => x.Coords, type: typeof(ListGraphType<ListGraphType<FloatGraphType>>))
+//                .Name("coors")
+//                .ResolveAsync(async context => context.Source.Coords);//
         }
     }
     public class InscritoPuebloPropertyType : ObjectGraphType<InscritoPueblo>

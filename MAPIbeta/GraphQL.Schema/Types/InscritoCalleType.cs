@@ -12,7 +12,8 @@ namespace GraphQL.Schema.Types
         {
             Name = "geometry";
             Field(x => x.Type).Description("Tipo de geometría de la calle");
-            Field(x => x.Coordinates).Description("Geometría del lote");
+            Field<StringGraphType>("coordinates",
+              resolve: context => context.Source.Coordinates.ToArray());
         }
     }
     public class InscritoCallePropertyType : ObjectGraphType<InscritoCalle>

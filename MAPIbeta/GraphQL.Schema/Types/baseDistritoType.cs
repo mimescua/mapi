@@ -12,10 +12,9 @@ namespace GraphQL.Schema.Types
         {
             Name = "geometry";
             Field(x => x.Type).Description("Tipo de geometría del distrito");
-            Field(x => x.Coordinates).Description("Geometría del distrito");
+            Field<StringGraphType>("coordinates",
+              resolve: context => context.Source.Coordinates.ToArray());
         }
-        //public baseDistritoPropertyType basees;
-
     }
     //public class baseDistritoPropertyType : ObjectGraphType<baseDistrito>
     //{

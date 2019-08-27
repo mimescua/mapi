@@ -12,7 +12,8 @@ namespace GraphQL.Schema.Types
         {
             Name = "geometry";
             Field(x => x.Type).Description("Tipo de geometría de la manzana");
-            Field(x => x.Coordinates).Description("Geometría de la manzana");
+            Field<StringGraphType>("coordinates",
+              resolve: context => context.Source.Coordinates.ToArray());
         }
     }
     public class InscritoManzanaPropertyType : ObjectGraphType<InscritoManzana>

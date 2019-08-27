@@ -12,7 +12,8 @@ namespace GraphQL.Schema.Types
         {
             Name = "geometry";
             Field(x => x.Type).Description("Tipo de geometría de la región");
-            Field(x => x.Coordinates).Description("Geometría de la región");
+            Field<StringGraphType>("coordinates",
+              resolve: context => context.Source.Coordinates.ToArray());
         }
     }
     //public class baseRegionPropertyType : ObjectGraphType<baseDistrito>

@@ -12,7 +12,8 @@ namespace GraphQL.Schema.Types
         {
             Name = "geometry";
             Field(x => x.Type).Description("Tipo de geometría del pueblo");
-            Field(x => x.Coordinates).Description("Geometría del pueblo");
+            Field<StringGraphType>("coordinates",
+              resolve: context => context.Source.Coordinates.ToArray());
         }
     }
     public class MatrizPuebloPropertyType : ObjectGraphType<MatrizPueblo>
@@ -21,10 +22,10 @@ namespace GraphQL.Schema.Types
         {
             Name = "Pueblo_Matriz_Properties";
             Field(x => x.Id).Description("Ubigeo del pueblo");
-            Field(x => x.Nombre).Description("Nombre del pueblo");
-            Field(x => x.Ubigeo).Description("Ubigeo del pueblo");
+            Field(x => x.Nombre, nullable: true).Description("Nombre del pueblo");
+            Field(x => x.Ubigeo, nullable: true).Description("Ubigeo del pueblo");
 
-            Field(x => x.CodPueblo).Description("código del pueblo");
+            Field(x => x.CodPueblo, nullable: true).Description("código del pueblo");
         }
     }
 }
