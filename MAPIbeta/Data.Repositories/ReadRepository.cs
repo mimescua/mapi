@@ -247,7 +247,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = t.Type,
-                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<int, Lote>> GetPropsLotesByIdList(IEnumerable<int> loteIds, CancellationToken token)
@@ -276,7 +276,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = t.Type,
-                Coordinates = JsonConvert.DeserializeObject<List<double?>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<double>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<int, Calle>> GetPropsCallesByIdList(IEnumerable<int> calleIds, CancellationToken token)
@@ -295,7 +295,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = t.Type,
-                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<int, Manzana>> GetPropsManzanasByIdList(IEnumerable<int> manzanaIds, CancellationToken token)
@@ -316,7 +316,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = t.Type,
-                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<int, Pueblo>> GetPropsPueblosByIdList(IEnumerable<int> puebloIds, CancellationToken token)
@@ -340,7 +340,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = t.Type,
-                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<int, UnidadT>> GetPropsUnidadtByIdList(IEnumerable<int> unidadtIds, CancellationToken token)
@@ -360,7 +360,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = "MultiPolygon",
-                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, InscritoLote>> GetPropsLotesInscritoByIdList(IEnumerable<string> loteIds, CancellationToken token)
@@ -383,7 +383,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = "Point",
-                Coordinates = JsonConvert.DeserializeObject<List<double?>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<double>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, InscritoCalle>> GetPropsCallesInscritoByIdList(IEnumerable<string> calleIds, CancellationToken token)
@@ -406,7 +406,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = "MultiPolygon",
-                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, InscritoManzana>> GetPropsManzanasInscritoByIdList(IEnumerable<string> manzanaIds, CancellationToken token)
@@ -431,7 +431,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = "MultiPolygon",
-                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, InscritoPueblo>> GetPropsPueblosInscritoByIdList(IEnumerable<string> puebloIds, CancellationToken token)
@@ -455,7 +455,7 @@ namespace Data.Repositories
             {
                 Id = t.Id,
                 Type = "MultiPolygon",
-                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, MatrizPueblo>> GetPropsPuebloMatrizByIdList(IEnumerable<string> matrizIds, CancellationToken token)
@@ -640,7 +640,7 @@ namespace Data.Repositories
                 .Select(t => new baseDistrito
                 {
                     Type = "MultiPolygon",
-                    Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString),
+                    Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString),
                 }).SingleOrDefaultAsync();
             return await result;
         }
@@ -651,7 +651,7 @@ namespace Data.Repositories
                 .Select(t => new baseProvincia
                 {
                     Type = "MultiPolygon",
-                    Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString),
+                    Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString),
                 }).SingleOrDefaultAsync();
             return await result;
         }
@@ -663,7 +663,7 @@ namespace Data.Repositories
                 {
                     Type = "MultiPolygon",
                     Id = t.Id,
-                    Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double?>>>>>(t.CoordinateString),
+                    Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString),
                 }).SingleOrDefaultAsync();
             return await result;
         }

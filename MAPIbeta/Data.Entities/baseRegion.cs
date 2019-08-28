@@ -17,7 +17,7 @@ namespace Data.Entities
         [Column("COORDINATES")]
         public string CoordinateString { get; set; }
         [NotMapped]
-        public List<List<List<List<double?>>>> Coordinates { get; set; }
+        public List<List<List<List<double>>>> Coordinates { get; set; }
 
         //[Column("UBI_DEPARTAMENTO")]
         //public string Region { get; set; }

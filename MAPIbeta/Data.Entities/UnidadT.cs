@@ -19,7 +19,7 @@ namespace Data.Entities
         [Column("COORDINATES")]
         public string CoordinateString { get; set; }
         [NotMapped]
-        public List<List<List<List<double?>>>> Coordinates { get; set; }
+        public List<List<List<List<double>>>> Coordinates { get; set; }
 
         [Column("NOMBRE")]
         public string Nombre { get; set; }

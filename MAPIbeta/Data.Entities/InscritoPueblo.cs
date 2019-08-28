@@ -21,11 +21,10 @@ namespace Data.Entities
         [Column("COORDINATES")]
         public string CoordinateString { get; set; }
         [Column("CENTROID")]
-        public string Centroide { get; set; }/////
+        public string Centroide { get; set; }
 
         [NotMapped]
-        public List<List<List<List<double?>>>> Coordinates { get; set; }
-        //public JArray Coords { get; set; }
+        public List<List<List<List<double>>>> Coordinates { get; set; }
 
         [Column("NOM_PUEBLO")]
         public string Nombre { get; set; }

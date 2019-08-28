@@ -21,7 +21,7 @@ namespace Data.Entities
         [Column("COORDINATES")]
         public string CoordinateString { get; set; }
         [NotMapped]
-        public List<double?> Coordinates { get; set; }
+        public List<double> Coordinates { get; set; }
 
         [Column("NOM_CALLE")]
         public string Nombre { get; set; }
