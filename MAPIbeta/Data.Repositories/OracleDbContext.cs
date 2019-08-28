@@ -27,7 +27,7 @@ namespace Data.Repositories
         public DbSet<Manzana> SFI_GEOMANZANA { get; set; }
         public DbSet<Pueblo> SFI_GEOPUEBLO { get; set; }
         public DbSet<UnidadT> SFI_GEOUNIDADT { get; set; }
-        public DbSet<PuebloUbicacion> SFI_PUEBLO_UBICACION { get; set; }
+        public DbSet<PuebloInforme> SFI_PUEBLO_INFORME { get; set; }
 
         public DbSet<InscritoLote> BMAP_LOTE { get; set; }
         public DbSet<InscritoCalle> BMAP_CALLE { get; set; }

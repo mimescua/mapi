@@ -85,17 +85,40 @@ namespace GraphQL.Schema
                 }
             );
 
-            Field<ListGraphType<PuebloUbicacionType>>(
-                "puebloexistente",
+            Field<ListGraphType<PuebloInformeType>>(
+                "puebloInformeCodPueblo",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "codpueblo" }
                 ),
                 resolve: context =>
                 {
                     var codpueblo = context.GetArgument<string>("codpueblo");
-                    return readRepository.GetPuebloExistenteByUbigeo(codpueblo);
+                    return readRepository.GetPuebloInformeByCodPueblo(codpueblo);
                 }
             );
+            Field<ListGraphType<PuebloInformeType>>(
+                "puebloInformeNombre",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "nombre" }
+                ),
+                resolve: context =>
+                {
+                    var nombre = context.GetArgument<string>("nombre");
+                    return readRepository.GetPuebloInformeByNombre(nombre);
+                }
+            );
+            Field<ListGraphType<PuebloInformeType>>(
+                "puebloInformeCodCofopri",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "codcofopri" }
+                ),
+                resolve: context =>
+                {
+                    var codcofopri = context.GetArgument<string>("codcofopri");
+                    return readRepository.GetPuebloInformeByCodCofopri(codcofopri);
+                }
+            );
+
             Field<ListGraphType<CentroideType>>(
                 "distrito",
                 arguments: new QueryArguments(

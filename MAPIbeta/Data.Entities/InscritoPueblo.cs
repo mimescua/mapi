@@ -21,10 +21,12 @@ namespace Data.Entities
         [Column("COORDINATES")]
         public string CoordinateString { get; set; }
         [Column("CENTROID")]
-        public string Centroide { get; set; }
+        public string CentroideString { get; set; }
 
         [NotMapped]
         public List<List<List<List<double>>>> Coordinates { get; set; }
+        [NotMapped]
+        public List<double> Centroide { get; set; }
 
         [Column("NOM_PUEBLO")]
         public string Nombre { get; set; }

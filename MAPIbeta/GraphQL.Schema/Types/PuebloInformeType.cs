@@ -6,14 +6,15 @@ using System.Text;
 
 namespace GraphQL.Schema.Types
 {
-    public class PuebloUbicacionType : ObjectGraphType<PuebloUbicacion>
+    public class PuebloInformeType : ObjectGraphType<PuebloInforme>
     {
-        public PuebloUbicacionType()
+        public PuebloInformeType()
         {
-            Name = "puebloExistente";
+            Name = "puebloInforme";
             Field(x => x.Id).Description("Identificador de pueblo existente");
-            Field(x => x.Coordenadas).Description("Coordenadas de pueblo existente");
             Field(x => x.Nombre).Description("Nombre de pueblo existente");
+            Field(x => x.CodCofopri).Description("Nombre de pueblo existente");
+            Field(x => x.Coordinates).Description("Coordenadas de pueblo existente");
         }
     }
 }

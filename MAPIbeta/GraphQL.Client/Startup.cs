@@ -80,7 +80,7 @@ namespace GraphQL.Client
             services.AddScoped<baseProvinciaGeometryType>();
             services.AddScoped<baseRegionGeometryType>();
 
-            services.AddScoped<PuebloUbicacionType>();
+            services.AddScoped<PuebloInformeType>();
 
             services.AddScoped<UnidadTInputType>();
             services.AddScoped<UnidadTType>();

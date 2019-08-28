@@ -12,8 +12,8 @@ namespace GraphQL.Schema.Types
         {
             Name = "geometryCen";
             Field(x => x.Type).Description("Tipo de geometría del pueblo");
-            Field<StringGraphType>("coordinates",
-              resolve: context => context.Source.Coordinates.ToArray());
+            Field<StringGraphType>("centroide",
+              resolve: context => context.Source.Centroide.ToArray());
         }
     }
     public class CentroideInscritoPuebloPropertyType : ObjectGraphType<InscritoPueblo>

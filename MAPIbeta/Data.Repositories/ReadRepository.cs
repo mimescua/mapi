@@ -468,31 +468,13 @@ namespace Data.Repositories
         }
 
 
-        //public async Task<IDictionary<string, CentroidePueblo>> GetGeomCenPueblosByIdList(IEnumerable<string> matrizIds, CancellationToken token)
-        //{
-        //    return await _dbContext.BMAP_PUEBLO_CENTROIDE.Where(i => matrizIds.Contains(i.Id)).Select(t => new CentroidePueblo
-        //    {
-        //        Id = t.Id,
-        //        Type = "Point",
-        //        Coordinates = t.Coordinates
-        //    }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
-        //}
-        //public async Task<IDictionary<string, CentroidePueblo>> GetPropsCenPueblosByIdList(IEnumerable<string> matrizIds, CancellationToken token)
-        //{
-        //    return await _dbContext.BMAP_PUEBLO_CENTROIDE.Where(i => matrizIds.Contains(i.Id)).Select(t => new CentroidePueblo
-        //    {
-        //        Id = Convert.ToInt32(t.Id),
-        //        Nombre = t.Nombre,
-        //    }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
-        //}
-
         public async Task<IDictionary<string, InscritoPueblo>> GetGeomCenPueblosInscritoByIdList(IEnumerable<string> matrizIds, CancellationToken token)
         {
             return await _dbContext.BMAP_PUEBLO.Where(i => matrizIds.Contains(i.Id)).Select(t => new InscritoPueblo
             {
                 Id = t.Id,
                 Type = "Point",
-                Centroide = t.Centroide
+                Centroide = JsonConvert.DeserializeObject<List<double>>(t.CentroideString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<string, InscritoPueblo>> GetPropsCenPueblosInscritoByIdList(IEnumerable<string> matrizIds, CancellationToken token)
@@ -612,12 +594,24 @@ namespace Data.Repositories
             return await result;
         }
 
-        //Coordenadas de ubicación de pueblo en formalización
-        public Task<List<PuebloUbicacion>> GetPuebloExistenteByUbigeo(string codpueblo)
+        //Centroide de pueblo en formalización - tabla SFI_PUEBLOS
+        public Task<List<PuebloInforme>> GetPuebloInformeByCodPueblo(string codpueblo)
         {
-            //return _dbContext.SFI_PUEBLOEXISTENTE.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.Id.ToString(), codpueblo + "%")).ToListAsync();
-            return _dbContext.SFI_PUEBLO_UBICACION.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => t.Id.ToString() == codpueblo).ToListAsync();
+            //return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.Id.ToString(), codpueblo + "%")).ToListAsync();
+            return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => t.Id.ToString() == codpueblo).ToListAsync();  //EXACT MATCH
         }
+        public Task<List<PuebloInforme>> GetPuebloInformeByNombre(string nombre)
+        {
+            return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.Nombre, nombre + "%")).ToListAsync(); //MATCH LIST
+            //return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => t.Nombre == nombre).ToListAsync();
+        }
+        public Task<List<PuebloInforme>> GetPuebloInformeByCodCofopri(string codcofopri)
+        {
+            return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.CodCofopri, codcofopri + "%")).ToListAsync();  //MATCH LIST
+            //return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => t.CodCofopri == codcofopri).ToListAsync();
+        }
+
+        //Centroide localidades - tabla SEGURIDAD.SFI_UBIGEO
         public Task<List<baseCentroide>> GetDistritoCentroideComo(string nombre)
         {
             //return _secContext.SFI_CENTROIDE.Where(t => t.Id == id).ToListAsync();
@@ -627,7 +621,7 @@ namespace Data.Repositories
         }
         public Task<List<baseCentroide>> GetProvinciaCentroideComo(string nombre)
         {
-            return _secContext.SFI_CENTROIDE.Where(t => EF.Functions.Like(t.Provincia.ToUpper(), nombre.ToUpper() + "%")).Where(u => u.Id.EndsWith("00")).Take(10).ToListAsync();
+            return _secContext.SFI_CENTROIDE.Where(t => EF.Functions.Like(t.Provincia.ToUpper(), nombre.ToUpper() + "%")).Where(u => u.Id.EndsWith("100")).Take(10).ToListAsync();
         }
         public Task<List<baseCentroide>> GetRegionCentroideComo(string nombre)
         {
@@ -643,8 +637,7 @@ namespace Data.Repositories
                     Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString),
                 }).SingleOrDefaultAsync();
             return await result;
-        }
-        
+        }   
         public async Task<baseProvincia> GetBaseProvinciaPor(string ubigeo)
         {
             var result = _dbContext.BMAP_PROVINCIA.Where(t => t.Id == ubigeo)
@@ -655,7 +648,6 @@ namespace Data.Repositories
                 }).SingleOrDefaultAsync();
             return await result;
         }
-
         public async Task<baseRegion> GetBaseRegionPor(string ubigeo)
         {
             var result = _dbContext.BMAP_DEPARTAMENTO.Where(t => t.Id == ubigeo)
