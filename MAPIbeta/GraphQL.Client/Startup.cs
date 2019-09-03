@@ -71,6 +71,7 @@ namespace GraphQL.Client
             services.AddScoped<MatrizPuebloGeometryType>();
             services.AddScoped<MatrizPuebloPropertyType>();
 
+            services.AddScoped<CentroidePuebloType>();
             services.AddScoped<CentroidePuebloGeometryType>();
             services.AddScoped<CentroidePuebloPropertyType>();
             services.AddScoped<CentroideInscritoPuebloGeometryType>();

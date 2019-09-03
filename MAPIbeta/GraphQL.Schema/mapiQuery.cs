@@ -119,6 +119,18 @@ namespace GraphQL.Schema
                 }
             );
 
+            Field<ListGraphType<CentroidePuebloType>>(
+                "puebloNroPlano",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "nroplano" }
+                ),
+                resolve: context =>
+                {
+                    var nroplano = context.GetArgument<string>("nroplano");
+                    return readRepository.GetPuebloCentroideByPlano(nroplano);
+                }
+            );
+
             Field<ListGraphType<CentroideType>>(
                 "distrito",
                 arguments: new QueryArguments(
@@ -152,6 +164,8 @@ namespace GraphQL.Schema
                     return readRepository.GetRegionCentroideComo(nombre);
                 }
             );
+
+
             Field<baseDistritoGeometryType>(
                 "basedistrito",
                 arguments: new QueryArguments(

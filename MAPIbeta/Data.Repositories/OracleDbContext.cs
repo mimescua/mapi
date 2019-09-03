@@ -28,6 +28,7 @@ namespace Data.Repositories
         public DbSet<Pueblo> SFI_GEOPUEBLO { get; set; }
         public DbSet<UnidadT> SFI_GEOUNIDADT { get; set; }
         public DbSet<PuebloInforme> SFI_PUEBLO_INFORME { get; set; }
+        public DbSet<Plano> SFI_GEO_PLANO { get; set; }
 
         public DbSet<InscritoLote> BMAP_LOTE { get; set; }
         public DbSet<InscritoCalle> BMAP_CALLE { get; set; }

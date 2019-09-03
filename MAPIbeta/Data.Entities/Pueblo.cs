@@ -23,6 +23,8 @@ namespace Data.Entities
         public string CoordinateString { get; set; }
         [NotMapped]
         public List<List<List<List<double>>>> Coordinates { get; set; }
+        [Column("CENTROID")]
+        public string Centroide { get; set; }
 
         [Column("NOMBRE")]
         public string Nombre { get; set; }

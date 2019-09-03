@@ -598,17 +598,36 @@ namespace Data.Repositories
         public Task<List<PuebloInforme>> GetPuebloInformeByCodPueblo(string codpueblo)
         {
             //return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.Id.ToString(), codpueblo + "%")).ToListAsync();
-            return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => t.Id.ToString() == codpueblo).ToListAsync();  //EXACT MATCH
+            return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => t.Id.ToString() == codpueblo).Take(15).ToListAsync();  //EXACT MATCH
         }
         public Task<List<PuebloInforme>> GetPuebloInformeByNombre(string nombre)
         {
-            return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.Nombre, nombre + "%")).ToListAsync(); //MATCH LIST
+            return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.Nombre.ToUpper(), nombre.ToUpper() + "%")).Take(15).ToListAsync(); //MATCH LIST
             //return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => t.Nombre == nombre).ToListAsync();
         }
         public Task<List<PuebloInforme>> GetPuebloInformeByCodCofopri(string codcofopri)
         {
-            return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.CodCofopri, codcofopri + "%")).ToListAsync();  //MATCH LIST
+            return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => EF.Functions.Like(t.CodCofopri.ToUpper(), codcofopri.ToUpper() + "%")).Take(15).ToListAsync();  //MATCH LIST
             //return _dbContext.SFI_PUEBLO_INFORME.Where(t => t.Estado == 1).Where(t => t.Tipo == 1).Where(t => t.CodCofopri == codcofopri).ToListAsync();
+        }
+
+        //Centroide de pueblo en formalización - tabla SFI_GEOPUEBLOS       //Hummmm no vale para autocompletado???
+        public Task<List<Pueblo>> GetPuebloCentroideByPlano(string nroplano)
+        {
+            var result = _dbContext.SFI_GEOPUEBLO.Join(
+                _dbContext.SFI_GEO_PLANO,
+                    pueblo => pueblo.PlanoId,
+                    plano => plano.Id,
+                    (pueblo, plano) => new { pueblo, plano }
+                )
+                .Where(t => EF.Functions.Like(t.plano.NroPlano.ToUpper(), nroplano.ToUpper() + "%")).Select(r => new Pueblo
+                {
+                    Id = r.pueblo.Id,
+                    Centroide = r.pueblo.Centroide,
+                    Nombre = r.pueblo.Nombre
+                }).Take(15).ToListAsync(); //MATCH LIST
+            //var result = _dbContext.SFI_GEOPUEBLO.ToListAsync();
+            return result;
         }
 
         //Centroide localidades - tabla SEGURIDAD.SFI_UBIGEO
