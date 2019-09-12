@@ -16,7 +16,6 @@ namespace GraphQL.Schema.Types
             Field<StringGraphType>("coordinates",
               resolve: context => context.Source.Coordinates.ToArray());
             Field(x => x.Nombre, nullable: true).Description("Nombre de la unidad territorial");
-            Field(x => x.Ubigeo, nullable: true).Description("Ubigeo de la unidad territorial");
         }
     }
     public class UnidadTGeometryType : ObjectGraphType<UnidadT>
@@ -36,7 +35,6 @@ namespace GraphQL.Schema.Types
             Name = "unidadtProperties";
             Field(x => x.Id).Description("Identificador de la unidad territorial");
             Field(x => x.Nombre, nullable: true).Description("Nombre de la unidad territorial");
-            Field(x => x.Ubigeo, nullable: true).Description("Ubigeo de la unidad territorial");
         }
     }
 }

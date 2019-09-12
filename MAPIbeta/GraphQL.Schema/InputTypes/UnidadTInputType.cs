@@ -13,9 +13,8 @@ namespace GraphQL.Schema.InputTypes
             Name = "unidadtInput";
             Field<NonNullGraphType<IntGraphType>>("Id");
             Field<NonNullGraphType<StringGraphType>>("Type");
-            Field<NonNullGraphType<StringGraphType>>("Coordinates");
+            Field<NonNullGraphType<StringGraphType>>("CoordinateString");
             Field<NonNullGraphType<StringGraphType>>("Nombre");
-            Field<StringGraphType>("Ubigeo");
         }
     }
 }

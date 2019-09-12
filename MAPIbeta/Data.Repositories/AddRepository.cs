@@ -1,5 +1,6 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,15 @@ namespace Data.Repositories
         {
             _dbContext.SFI_GEOUNIDADT.Add(unidadT);
             await _dbContext.SaveChangesAsync();
-            return unidadT;
+
+            UnidadT _unidadt = new UnidadT()
+            {
+                Id = unidadT.Id,
+                Type = unidadT.Type,
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<double>>>>(unidadT.CoordinateString),
+                Nombre = unidadT.Nombre
+            };
+            return _unidadt;
         }
     }
 }

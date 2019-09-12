@@ -336,20 +336,19 @@ namespace Data.Repositories
 
         public async Task<IDictionary<int, UnidadT>> GetGeomUnidadtByIdList(IEnumerable<int> unidadtIds, CancellationToken token)
         {
-            return await _dbContext.SFI_GEOPUEBLO.Where(i => unidadtIds.Contains(i.Id)).Select(t => new UnidadT
+            return await _dbContext.SFI_GEOUNIDADT.Where(i => unidadtIds.Contains(i.Id)).Select(t => new UnidadT
             {
                 Id = t.Id,
                 Type = t.Type,
-                Coordinates = JsonConvert.DeserializeObject<List<List<List<List<double>>>>>(t.CoordinateString)
+                Coordinates = JsonConvert.DeserializeObject<List<List<List<double>>>>(t.CoordinateString)
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
         public async Task<IDictionary<int, UnidadT>> GetPropsUnidadtByIdList(IEnumerable<int> unidadtIds, CancellationToken token)
         {
-            return await _dbContext.SFI_GEOPUEBLO.Where(i => unidadtIds.Contains(i.Id)).Select(t => new UnidadT
+            return await _dbContext.SFI_GEOUNIDADT.Where(i => unidadtIds.Contains(i.Id)).Select(t => new UnidadT
             {
                 Id = t.Id,
-                Nombre = t.Nombre,
-                Ubigeo = t.Ubigeo
+                Nombre = t.Nombre
             }).ToDictionaryAsync(x => x.Id, cancellationToken: token);
         }
 
@@ -588,8 +587,7 @@ namespace Data.Repositories
             var result = _dbContext.SFI_GEOUNIDADT.Where(t => t.Id == id)
                 .Select(t => new UnidadT
                 {
-                    Nombre = t.Nombre,
-                    Ubigeo = t.Ubigeo,
+                    Nombre = t.Nombre
                 }).SingleOrDefaultAsync();
             return await result;
         }
